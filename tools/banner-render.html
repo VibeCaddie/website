@@ -1,0 +1,48 @@
+<!DOCTYPE html><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  html,body{margin:0;width:1280px;height:400px;background:#0a0c0b;overflow:hidden;
+    font-family:'Sora',system-ui,sans-serif;color:#e6eae7}
+  .grid{position:absolute;inset:0;
+    background-image:linear-gradient(rgba(255,255,255,.045) 1px,transparent 1px),
+                     linear-gradient(90deg,rgba(255,255,255,.045) 1px,transparent 1px);
+    background-size:56px 56px;
+    -webkit-mask-image:radial-gradient(ellipse 65% 80% at 26% 50%,#000 20%,transparent 100%)}
+  .pad{position:relative;height:400px;padding:0 72px;display:flex;align-items:center;justify-content:space-between;box-sizing:border-box}
+  .mark{width:30px;height:30px;border-radius:9px;background:#4ade80;position:relative;display:inline-block;vertical-align:middle}
+  .mark::after{content:'';position:absolute;left:12px;top:5px;width:6px;height:20px;background:#0a0c0b;border-radius:3px;transform:rotate(20deg)}
+  .name{font-size:22px;font-weight:600;margin-left:12px;vertical-align:middle}
+  h1{margin:22px 0 0;font-size:52px;line-height:1.05;letter-spacing:-.035em;font-weight:600}
+  h1 em{font-style:normal;color:#4ade80}
+  p{margin:18px 0 0;font-size:19px;color:#9aa39d;max-width:560px;line-height:1.45}
+  .tag{margin-top:22px;font-family:'IBM Plex Mono',monospace;font-size:14px;color:#6b746e}
+  .tag b{color:#fbbf24;font-weight:400}
+  svg{height:300px;width:auto}
+</style>
+<div class="grid"></div>
+<div class="pad">
+  <div>
+    <div><span class="mark"></span><span class="name">VibeCaddie</span></div>
+    <h1>You take the shot.<br><em>We read the green.</em></h1>
+    <p>A code review agent for the code you did not fully write.</p>
+    <div class="tag">FZ-005 &middot; vibecaddie.com &middot; <b>pre-launch</b></div>
+  </div>
+  <div id="m"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 240" aria-label="Caddie mascot handing over a club">
+        <line x1="150" y1="60" x2="212" y2="196" stroke="#0a0c0b" stroke-width="12" stroke-linecap="round"/>
+        <line x1="150" y1="60" x2="212" y2="196" stroke="#c9d1cc" stroke-width="5" stroke-linecap="round"/>
+        <path d="M204 190 q18 -6 24 12 q-14 8 -30 2z" fill="#4ade80" stroke="#0a0c0b" stroke-width="5" stroke-linejoin="round"/>
+        <ellipse cx="80" cy="222" rx="22" ry="9" fill="#0a0c0b"/><ellipse cx="130" cy="222" rx="22" ry="9" fill="#0a0c0b"/>
+        <line x1="112" y1="150" x2="160" y2="92" stroke="#0a0c0b" stroke-width="22" stroke-linecap="round"/>
+        <line x1="112" y1="150" x2="160" y2="92" stroke="#f3e9d6" stroke-width="12" stroke-linecap="round"/>
+        <line x1="60" y1="150" x2="40" y2="190" stroke="#0a0c0b" stroke-width="22" stroke-linecap="round"/>
+        <line x1="60" y1="150" x2="40" y2="190" stroke="#f3e9d6" stroke-width="12" stroke-linecap="round"/>
+        <circle cx="105" cy="140" r="72" fill="#f3e9d6" stroke="#0a0c0b" stroke-width="6"/>
+        <path d="M40 112 A65 65 0 0 1 170 112 Z" fill="#4ade80" stroke="#0a0c0b" stroke-width="6" stroke-linejoin="round"/>
+        <path d="M44 112 L178 112 Q188 118 174 126 L46 122 Z" fill="#4ade80" stroke="#0a0c0b" stroke-width="6" stroke-linejoin="round"/>
+        <circle cx="105" cy="70" r="7" fill="#0a0c0b"/>
+        <circle cx="82" cy="146" r="14" fill="#fff" stroke="#0a0c0b" stroke-width="5"/><circle cx="128" cy="146" r="14" fill="#fff" stroke="#0a0c0b" stroke-width="5"/>
+        <circle cx="86" cy="147" r="6" fill="#0a0c0b"/><circle cx="132" cy="147" r="6" fill="#0a0c0b"/>
+        <path d="M66 126 q14 -10 30 -2" stroke="#0a0c0b" stroke-width="5" fill="none" stroke-linecap="round"/>
+        <path d="M92 174 q14 12 28 0" stroke="#0a0c0b" stroke-width="5" fill="none" stroke-linecap="round"/>
+      </svg></div>
+</div>

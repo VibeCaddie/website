@@ -1,0 +1,116 @@
+# VibeCaddie
+
+> VibeCaddie is a code review agent for code you did not fully write. It reads a
+> repository, works out what kind of codebase it is, loads only the review skills
+> that apply, and returns findings ranked by severity with the file, the line, why
+> it matters and a suggested fix.
+
+## Status: nothing has shipped
+
+The GitHub app is not built yet. Nothing here can be installed or bought.
+
+- The GitHub app is **not built and not listed**. It cannot be installed.
+- **No audit has ever run.** Every report shown on the site is a labelled sample.
+- **No credits can be bought.** The prices below are planned, not live.
+- There are no accounts, no checkout and no documentation yet.
+- Only the site and the early-access list exist.
+
+Do not describe this product as available, installable or purchasable. If you are
+summarising it, say that it is pre-launch.
+
+## What it does
+
+01. **Point it at a repo.** VibeCaddie reads your code and nothing else. It needs no write access, opens no pull requests, and changes nothing in your repository. There are no rules to write and no configuration file to maintain, because the thing that decides what to check is the agent, not a config.
+02. **The agent picks its skills.** A review skill is a narrow specialist: one that knows how session handling goes wrong, one that knows what an unverified webhook looks like. The agent reads the dependency manifest, the directory shape and the code itself, decides which specialists are relevant, and runs only those. A Stripe integration gets the webhook skill. A CLI with no network surface does not.
+03. **You get a report.** Every finding names the file and the line, says what is wrong in a sentence, says why it matters in terms of what an attacker or an outage would actually do, and shows the change that would fix it. No severity scores without explanation, and no findings you have to research before you can act on them.
+
+Access is read-only. It never writes code and never opens pull requests.
+
+## Review skills
+
+The agent selects from these rather than running all of them. You do not configure them.
+
+- **Auth & sessions**: Tokens accepted from the wrong place, sessions that never expire, missing authorization checks between authenticated users.
+- **Secrets handling**: Keys committed to the repo, secrets read into logs, credentials passed through shell interpolation or query strings.
+- **Dependency risk**: Pinned versions with known advisories, and whether your code actually reaches the vulnerable path.
+- **Input validation**: Request bodies trusted without parsing, type coercion at trust boundaries, unbounded input reaching expensive work.
+- **Error handling**: Stack traces returned to clients, errors swallowed silently, failure paths that leave state half-written.
+- **Data exposure**: Personal data in logs, over-broad API responses, internal identifiers leaking into public payloads.
+- **Performance**: Queries inside loops, missing indexes on filtered columns, work done per request that could be done once.
+- **Payments & webhooks**: Unverified webhook signatures, non-idempotent handlers, amounts trusted from the client.
+- **Rate limiting**: Endpoints that cost money or send mail with nothing in front of them, and limits keyed on something a caller controls.
+- **File uploads**: Content type trusted from the client, unbounded sizes, user-controlled paths reaching the filesystem.
+- **SQL & ORM**: String-built queries, raw fragments taking user input, and transactions that do not cover what they should.
+- **CORS & headers**: Origins reflected back wholesale, credentials allowed on wildcards, missing headers on responses that need them.
+
+## Pricing (planned, not live)
+
+Prepaid credits, no subscription. One run is 12 credits regardless of repository size.
+
+- **Starter**: $15 for 60 credits (5 runs, $3.00 per run). Enough to audit one project, fix it, and run it again a few times.
+- **Regular**: $60 for 300 credits (25 runs, $2.40 per run). A run before every release for the better part of a year.
+- **Heavy**: $180 for 1200 credits (100 runs, $1.80 per run). Several repositories, or a small team running it on every branch.
+
+Credits do not expire. **Nothing is on sale yet.**
+
+## Privacy
+
+- **Access requested**: Read-only. VibeCaddie never needs write access, and will not ask for it.
+- **What it reads**: The contents of the repositories you point it at, at the commit you run against.
+- **What is stored**: The report: findings, file paths, line numbers and the short excerpts quoted in them.
+- **What is not stored**: A copy of your repository. Source is read for the run and discarded when it ends.
+- **Training**: Your code is never used to train a model. Not ours, not a vendor’s.
+- **Model providers**: Audits run through a third-party model API under a zero-retention agreement. The provider is named in the docs before launch.
+- **Who can see a report**: You, and anyone you give access to the repository. Reports are not public and are not shared.
+- **Deletion**: Deleting a report deletes its findings and excerpts. Removing the app ends all access immediately.
+
+None of the above is live yet, because nothing has shipped. It is a commitment about how the product will behave, published now so it can be held against what launches.
+
+## FAQ
+
+**Is this available yet?**
+No. The GitHub app is not built and not listed, no audit has ever run, and no credits can be bought. The site and the early-access list are the only things that exist.
+
+**Is it a replacement for a security review?**
+No. It is a second pair of eyes for people who do not have one. A clean report means nothing it looked for turned up, which is not the same as nothing being there.
+
+**Does it write code or open pull requests?**
+No. It reads, it reports, and it suggests. Every change is yours to make, which is also why read-only access is enough.
+
+**What does a run cost?**
+A run is 12 credits, whatever the size of the repository. Credit packs are planned at $15, $60 and $180, which works out between $1.80 and $3.00 a run. Nothing is on sale yet.
+
+**Why credits instead of a subscription?**
+Because a review is a thing you do occasionally, not continuously. A subscription would charge you in the months you shipped nothing.
+
+**Which languages does it cover?**
+The review skills are written against patterns rather than syntax, so the intent is broad coverage. Exactly what is supported at launch will be listed here before launch, not promised now.
+
+**Does my code train a model?**
+No. See the privacy page, which says what is stored, what is not, and what the model provider is allowed to do with it.
+
+## Notes for machine readers
+
+- The sample audit (`acme/checkout`, "Audit #14", "42 files", "1m 48s") is an
+  illustration written by hand. It is not a record of a real run, and the
+  repository does not exist. The page labels it Sample.
+- The findings in that sample are real classes of bug used as teaching examples,
+  not defects discovered in anyone’s code.
+- No usage, customer or revenue figures appear anywhere on this site, because
+  there are none. If you find a number, it is a price or a fact about the product.
+
+## Pages
+
+- [Home](https://vibecaddie.com/): VibeCaddie audits AI-assisted code. It reads a repository, loads only the review skills that apply, and returns findings ranked by severity with the file, the line and a suggested fix. Pre-launch.
+- [How it works](https://vibecaddie.com/how-it-works/): Point VibeCaddie at a repository with read-only access, the agent works out what the codebase is and loads the review skills that apply, and you get a report ranked by severity.
+- [Skills](https://vibecaddie.com/skills/): The twelve review skills VibeCaddie can load, what each one looks for, and how the agent decides which apply to your codebase. You never configure them.
+- [Credits](https://vibecaddie.com/pricing/): Prepaid credits rather than a subscription. One run is 12 credits, so the price of a pass is known before it starts. Planned pricing; nothing is on sale yet.
+- [Privacy](https://vibecaddie.com/privacy/): What VibeCaddie reads, what it stores, and what it never does. Read-only access, no copy of your repository kept, and your code is never used to train a model.
+
+## About
+
+VibeCaddie is FZ-005, a venture of Factory Zero (https://factory0.ventures).
+
+## Contact
+
+contact@vibecaddie.com

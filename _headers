@@ -1,0 +1,37 @@
+# Cloudflare Pages response headers.
+
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  X-Frame-Options: SAMEORIGIN
+  Permissions-Policy: geolocation=(), microphone=(), camera=(), interest-cohort=()
+
+# CSS and JS are referenced with a ?v=<content hash> stamped by
+# tools/build-dist.sh, so the URL changes whenever the file does.
+/assets/*.css
+  Cache-Control: public, max-age=31536000, immutable
+
+/assets/*.js
+  Cache-Control: public, max-age=31536000, immutable
+
+# SVG and PNG filenames are not hashed, so keep these short enough that a
+# push actually propagates.
+/assets/*.svg
+  Cache-Control: public, max-age=86400
+
+/assets/*.png
+  Cache-Control: public, max-age=604800
+
+# The agent-readable layer. Open to any origin so a tool can just fetch it.
+/vibecaddie.json
+  Cache-Control: public, max-age=3600
+  Content-Type: application/json; charset=utf-8
+  Access-Control-Allow-Origin: *
+
+/llms.txt
+  Cache-Control: public, max-age=3600
+  Content-Type: text/plain; charset=utf-8
+  Access-Control-Allow-Origin: *
+
+/.well-known/security.txt
+  Content-Type: text/plain; charset=utf-8

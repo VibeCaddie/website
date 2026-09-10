@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Review skills — VibeCaddie</title>
+<meta name="description" content="The twelve review skills VibeCaddie can load, what each one looks for, and how the agent decides which apply to your codebase. You never configure them.">
+<link rel="canonical" href="https://vibecaddie.com/skills/">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="VibeCaddie">
+<meta property="og:title" content="Review skills — VibeCaddie">
+<meta property="og:description" content="The twelve review skills VibeCaddie can load, what each one looks for, and how the agent decides which apply to your codebase. You never configure them.">
+<meta property="og:url" content="https://vibecaddie.com/skills/">
+<meta property="og:image" content="https://vibecaddie.com/assets/og-skills.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Review skills — VibeCaddie">
+<meta name="twitter:description" content="The twelve review skills VibeCaddie can load, what each one looks for, and how the agent decides which apply to your codebase. You never configure them.">
+<meta name="twitter:image" content="https://vibecaddie.com/assets/og-skills.png">
+
+<meta name="theme-color" content="#0a0c0b">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+
+<link rel="alternate" type="text/plain" href="/llms.txt" title="Plain-text brief for language models">
+<link rel="alternate" type="application/json" href="/vibecaddie.json" title="VibeCaddie as JSON">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/vc.css">
+
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://vibecaddie.com/#org","name":"VibeCaddie","url":"https://vibecaddie.com","email":"contact@vibecaddie.com","sameAs":["https://github.com/VibeCaddie","https://factory0.ventures"],"parentOrganization":{"@type":"Organization","name":"Factory Zero","url":"https://factory0.ventures"}},{"@type":"WebSite","@id":"https://vibecaddie.com/#site","url":"https://vibecaddie.com","name":"VibeCaddie","description":"VibeCaddie audits the code you did not fully write. Point it at a repository, run it, and get a ranked list of what to fix before it bites you.","publisher":{"@id":"https://vibecaddie.com/#org"}},{"@type":"SoftwareApplication","@id":"https://vibecaddie.com/#app","name":"VibeCaddie","applicationCategory":"DeveloperApplication","operatingSystem":"Web","description":"VibeCaddie audits the code you did not fully write. Point it at a repository, run it, and get a ranked list of what to fix before it bites you.","offers":[{"@type":"Offer","name":"Starter — 60 credits","price":"15","priceCurrency":"USD","availability":"https://schema.org/PreOrder","description":"Enough to audit one project, fix it, and run it again a few times."},{"@type":"Offer","name":"Regular — 300 credits","price":"60","priceCurrency":"USD","availability":"https://schema.org/PreOrder","description":"A run before every release for the better part of a year."},{"@type":"Offer","name":"Heavy — 1200 credits","price":"180","priceCurrency":"USD","availability":"https://schema.org/PreOrder","description":"Several repositories, or a small team running it on every branch."}]},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://vibecaddie.com/"},{"@type":"ListItem","position":2,"name":"Skills","item":"https://vibecaddie.com/skills/"}]}]}</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<div class="status-bar">
+  <div class="wrap"><b>Pre-launch.</b> <span>The GitHub app is not built yet. Nothing here can be installed or bought.</span></div>
+</div>
+
+<nav class="nav" data-open="false">
+  <div class="wrap">
+    <a class="wordmark" href="/"><span class="mark" aria-hidden="true"></span>VibeCaddie</a>
+    <button class="nav-toggle" type="button" aria-controls="nav-links">Menu</button>
+    <div class="nav-links" id="nav-links">
+      <a href="/how-it-works/">How it works</a>
+      <a href="/skills/" aria-current="page">Skills</a>
+      <a href="/pricing/">Credits</a>
+      <a href="/privacy/">Privacy</a>
+      <a class="btn btn-primary btn-sm" href="/#early-access">Get early access</a>
+    </div>
+  </div>
+</nav>
+<main id="main">
+
+<section class="section wrap" data-reveal>
+  <p class="kicker">Skills</p>
+  <h1 style="margin:16px 0 0;font-size:clamp(34px,5vw,60px)">The caddie picks the club.</h1>
+  <p class="lede" style="margin:22px 0 0;max-width:640px">You never configure these. The agent reads the repository, works out what it is, and loads the review skills that apply. A Stripe integration gets the webhook skill. A CLI does not.</p>
+</section>
+
+<section class="section-tight wrap" data-reveal>
+  <div class="two-col center">
+    <div>
+      <h2 style="font-size:clamp(22px,2.6vw,30px)">Selection is the product.</h2>
+      <p class="body" style="margin-top:16px">A scanner that runs every rule against every repository is how you get four hundred findings and no signal. The agent reads the codebase first and runs only what applies, which is why the list below lights up differently per project.</p>
+      <div class="detect-row">
+        <span class="dim">Detected:</span>
+        <span class="detect-name" data-detect-name>acme/checkout</span>
+      </div>
+      <div class="mono dim" style="margin-top:10px;font-size:12px" data-detect-stack>Next.js · Prisma · Stripe · Postgres</div>
+    </div>
+    <div style="position:relative">
+      <div class="skill-cloud" data-skills="[{&quot;name&quot;:&quot;acme/checkout&quot;,&quot;stack&quot;:&quot;Next.js · Prisma · Stripe · Postgres&quot;,&quot;on&quot;:[0,1,2,3,4,5,7,8,10]},{&quot;name&quot;:&quot;dana/ledger-cli&quot;,&quot;stack&quot;:&quot;Go · Cobra · SQLite&quot;,&quot;on&quot;:[1,2,3,4,10]},{&quot;name&quot;:&quot;studio/media-api&quot;,&quot;stack&quot;:&quot;Express · S3 · Redis · JWT&quot;,&quot;on&quot;:[0,1,3,5,6,8,9,11]}]">
+        <div class="mascot mascot--skills" aria-hidden="true"><div class="float"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 240" aria-label="Caddie mascot holding up a flag">
+          <line x1="178" y1="20" x2="178" y2="150" stroke="#0a0c0b" stroke-width="12" stroke-linecap="round"/><line x1="178" y1="20" x2="178" y2="150" stroke="#c9d1cc" stroke-width="5" stroke-linecap="round"/>
+          <path d="M181 22 L232 42 L181 62 Z" fill="#4ade80" stroke="#0a0c0b" stroke-width="5" stroke-linejoin="round"/>
+          <ellipse cx="80" cy="222" rx="22" ry="9" fill="#0a0c0b"/><ellipse cx="130" cy="222" rx="22" ry="9" fill="#0a0c0b"/>
+          <line x1="150" y1="140" x2="178" y2="100" stroke="#0a0c0b" stroke-width="22" stroke-linecap="round"/><line x1="150" y1="140" x2="178" y2="100" stroke="#f3e9d6" stroke-width="12" stroke-linecap="round"/>
+          <line x1="60" y1="150" x2="40" y2="190" stroke="#0a0c0b" stroke-width="22" stroke-linecap="round"/><line x1="60" y1="150" x2="40" y2="190" stroke="#f3e9d6" stroke-width="12" stroke-linecap="round"/>
+          <circle cx="105" cy="140" r="72" fill="#f3e9d6" stroke="#0a0c0b" stroke-width="6"/>
+          <path d="M40 112 A65 65 0 0 1 170 112 Z" fill="#4ade80" stroke="#0a0c0b" stroke-width="6" stroke-linejoin="round"/>
+          <path d="M44 112 L178 112 Q188 118 174 126 L46 122 Z" fill="#4ade80" stroke="#0a0c0b" stroke-width="6" stroke-linejoin="round"/>
+          <circle cx="105" cy="70" r="7" fill="#0a0c0b"/>
+          <circle cx="82" cy="146" r="14" fill="#fff" stroke="#0a0c0b" stroke-width="5"/><circle cx="128" cy="146" r="14" fill="#fff" stroke="#0a0c0b" stroke-width="5"/>
+          <circle cx="84" cy="142" r="6" fill="#0a0c0b"/><circle cx="130" cy="142" r="6" fill="#0a0c0b"/>
+          <path d="M90 172 q15 14 30 0" stroke="#0a0c0b" stroke-width="5" fill="none" stroke-linecap="round"/>
+        </svg></div></div>
+        <span class="skill-tag on"><span class="dot"></span>Auth &amp; sessions<span class="loaded">loaded</span></span>
+        <span class="skill-tag on"><span class="dot"></span>Secrets handling<span class="loaded">loaded</span></span>
+        <span class="skill-tag on"><span class="dot"></span>Dependency risk<span class="loaded">loaded</span></span>
+        <span class="skill-tag on"><span class="dot"></span>Input validation<span class="loaded">loaded</span></span>
+        <span class="skill-tag on"><span class="dot"></span>Error handling<span class="loaded">loaded</span></span>
+        <span class="skill-tag on"><span class="dot"></span>Data exposure<span class="loaded">loaded</span></span>
+        <span class="skill-tag"><span class="dot"></span>Performance<span class="loaded">loaded</span></span>
+        <span class="skill-tag on"><span class="dot"></span>Payments &amp; webhooks<span class="loaded">loaded</span></span>
+        <span class="skill-tag on"><span class="dot"></span>Rate limiting<span class="loaded">loaded</span></span>
+        <span class="skill-tag"><span class="dot"></span>File uploads<span class="loaded">loaded</span></span>
+        <span class="skill-tag on"><span class="dot"></span>SQL &amp; ORM<span class="loaded">loaded</span></span>
+        <span class="skill-tag"><span class="dot"></span>CORS &amp; headers<span class="loaded">loaded</span></span>
+      </div></div>
+  </div>
+</section>
+
+<section class="section-tight wrap" data-reveal>
+  <div class="skill-table">
+    <div class="skill-row">
+      <h3>Auth &amp; sessions</h3>
+      <p>Tokens accepted from the wrong place, sessions that never expire, missing authorization checks between authenticated users.</p>
+    </div>
+    <div class="skill-row">
+      <h3>Secrets handling</h3>
+      <p>Keys committed to the repo, secrets read into logs, credentials passed through shell interpolation or query strings.</p>
+    </div>
+    <div class="skill-row">
+      <h3>Dependency risk</h3>
+      <p>Pinned versions with known advisories, and whether your code actually reaches the vulnerable path.</p>
+    </div>
+    <div class="skill-row">
+      <h3>Input validation</h3>
+      <p>Request bodies trusted without parsing, type coercion at trust boundaries, unbounded input reaching expensive work.</p>
+    </div>
+    <div class="skill-row">
+      <h3>Error handling</h3>
+      <p>Stack traces returned to clients, errors swallowed silently, failure paths that leave state half-written.</p>
+    </div>
+    <div class="skill-row">
+      <h3>Data exposure</h3>
+      <p>Personal data in logs, over-broad API responses, internal identifiers leaking into public payloads.</p>
+    </div>
+    <div class="skill-row">
+      <h3>Performance</h3>
+      <p>Queries inside loops, missing indexes on filtered columns, work done per request that could be done once.</p>
+    </div>
+    <div class="skill-row">
+      <h3>Payments &amp; webhooks</h3>
+      <p>Unverified webhook signatures, non-idempotent handlers, amounts trusted from the client.</p>
+    </div>
+    <div class="skill-row">
+      <h3>Rate limiting</h3>
+      <p>Endpoints that cost money or send mail with nothing in front of them, and limits keyed on something a caller controls.</p>
+    </div>
+    <div class="skill-row">
+      <h3>File uploads</h3>
+      <p>Content type trusted from the client, unbounded sizes, user-controlled paths reaching the filesystem.</p>
+    </div>
+    <div class="skill-row">
+      <h3>SQL &amp; ORM</h3>
+      <p>String-built queries, raw fragments taking user input, and transactions that do not cover what they should.</p>
+    </div>
+    <div class="skill-row">
+      <h3>CORS &amp; headers</h3>
+      <p>Origins reflected back wholesale, credentials allowed on wildcards, missing headers on responses that need them.</p>
+    </div>
+  </div>
+  <p class="body" style="margin-top:22px">Clean means nothing we looked for turned up. It does not mean nothing is there.</p>
+</section>
+
+
+<section class="section wrap" id="early-access" style="text-align:center" data-reveal>
+  <h2>Did you run it through a caddie?</h2>
+  <p class="lede" style="margin:18px auto 0;max-width:560px">The GitHub app is not built yet. Nothing here can be installed or bought. Leave an address and we will write when there is something to try.</p>
+  <div style="display:flex;justify-content:center;margin-top:26px">
+<form class="ea" id="early-access-form" data-early-access data-fallback="contact@vibecaddie.com" method="post" action="/api/early-access">
+  <div class="ea-row">
+    <input type="email" name="email" required autocomplete="email" placeholder="you@example.com" aria-label="Your email address">
+    <input type="text" name="repo" placeholder="github.com/you/project (optional)" aria-label="A repository you would point it at">
+    <button class="btn btn-primary" type="submit">Get early access</button>
+  </div>
+  <label class="hp" aria-hidden="true">Company <input type="text" name="company" tabindex="-1" autocomplete="off"></label>
+  <p class="ea-msg" role="status" aria-live="polite"></p>
+</form></div>
+</section>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <span>&copy; <span data-year>2026</span> VibeCaddie</span>
+    <nav class="foot-nav" aria-label="Footer">
+      <a href="/">Home</a>
+      <a href="/how-it-works/">How it works</a>
+      <a href="/skills/">Skills</a>
+      <a href="/pricing/">Credits</a>
+      <a href="/privacy/">Privacy</a>
+      <a href="https://github.com/VibeCaddie" rel="noopener">GitHub</a>
+      <a href="mailto:contact@vibecaddie.com">Contact</a>
+    </nav>
+    <span class="fz-credit"><a href="https://factory0.ventures" rel="noopener"><svg class="fz-ring" viewBox="0 0 16 16" width="11" height="11" aria-hidden="true" focusable="false"><circle cx="8" cy="8" r="6.1" fill="none" stroke="#FF5A36" stroke-width="1.9" stroke-dasharray="28.7 9.6"/></svg><span>FZ-005 &middot; a Factory Zero venture</span></a></span>
+  </div>
+</footer>
+<script src="/assets/vc-data.js"></script>
+<script src="/assets/vc-common.js"></script>
+</body>
+</html>

@@ -1,0 +1,194 @@
+{
+  "name": "VibeCaddie",
+  "url": "https://vibecaddie.com",
+  "tagline": "You take the shot. We read the green.",
+  "summary": "VibeCaddie audits the code you did not fully write. Point it at a repository, run it, and get a ranked list of what to fix before it bites you.",
+  "status": {
+    "stage": "Pre-launch",
+    "shipped": false,
+    "note": "The GitHub app is not built yet. Nothing here can be installed or bought.",
+    "githubAppListed": false,
+    "auditsEverRun": false,
+    "creditsPurchasable": false,
+    "documentationExists": false
+  },
+  "factoryZero": {
+    "id": "FZ-005",
+    "studio": "https://factory0.ventures"
+  },
+  "product": {
+    "what": "A code review agent for AI-assisted code.",
+    "access": "read-only",
+    "writesCode": false,
+    "opensPullRequests": false,
+    "howItWorks": [
+      {
+        "step": "01",
+        "title": "Point it at a repo",
+        "detail": "VibeCaddie reads your code and nothing else. It needs no write access, opens no pull requests, and changes nothing in your repository. There are no rules to write and no configuration file to maintain, because the thing that decides what to check is the agent, not a config."
+      },
+      {
+        "step": "02",
+        "title": "The agent picks its skills",
+        "detail": "A review skill is a narrow specialist: one that knows how session handling goes wrong, one that knows what an unverified webhook looks like. The agent reads the dependency manifest, the directory shape and the code itself, decides which specialists are relevant, and runs only those. A Stripe integration gets the webhook skill. A CLI with no network surface does not."
+      },
+      {
+        "step": "03",
+        "title": "You get a report",
+        "detail": "Every finding names the file and the line, says what is wrong in a sentence, says why it matters in terms of what an attacker or an outage would actually do, and shows the change that would fix it. No severity scores without explanation, and no findings you have to research before you can act on them."
+      }
+    ]
+  },
+  "reviewSkills": [
+    {
+      "name": "Auth & sessions",
+      "looksFor": "Tokens accepted from the wrong place, sessions that never expire, missing authorization checks between authenticated users."
+    },
+    {
+      "name": "Secrets handling",
+      "looksFor": "Keys committed to the repo, secrets read into logs, credentials passed through shell interpolation or query strings."
+    },
+    {
+      "name": "Dependency risk",
+      "looksFor": "Pinned versions with known advisories, and whether your code actually reaches the vulnerable path."
+    },
+    {
+      "name": "Input validation",
+      "looksFor": "Request bodies trusted without parsing, type coercion at trust boundaries, unbounded input reaching expensive work."
+    },
+    {
+      "name": "Error handling",
+      "looksFor": "Stack traces returned to clients, errors swallowed silently, failure paths that leave state half-written."
+    },
+    {
+      "name": "Data exposure",
+      "looksFor": "Personal data in logs, over-broad API responses, internal identifiers leaking into public payloads."
+    },
+    {
+      "name": "Performance",
+      "looksFor": "Queries inside loops, missing indexes on filtered columns, work done per request that could be done once."
+    },
+    {
+      "name": "Payments & webhooks",
+      "looksFor": "Unverified webhook signatures, non-idempotent handlers, amounts trusted from the client."
+    },
+    {
+      "name": "Rate limiting",
+      "looksFor": "Endpoints that cost money or send mail with nothing in front of them, and limits keyed on something a caller controls."
+    },
+    {
+      "name": "File uploads",
+      "looksFor": "Content type trusted from the client, unbounded sizes, user-controlled paths reaching the filesystem."
+    },
+    {
+      "name": "SQL & ORM",
+      "looksFor": "String-built queries, raw fragments taking user input, and transactions that do not cover what they should."
+    },
+    {
+      "name": "CORS & headers",
+      "looksFor": "Origins reflected back wholesale, credentials allowed on wildcards, missing headers on responses that need them."
+    }
+  ],
+  "pricing": {
+    "model": "prepaid credits",
+    "runCostCredits": 12,
+    "purchasable": false,
+    "note": "Planned pricing. Nothing is on sale yet.",
+    "packs": [
+      {
+        "name": "Starter",
+        "price": "$15",
+        "credits": 60,
+        "runs": 5,
+        "perRun": "$3.00",
+        "desc": "Enough to audit one project, fix it, and run it again a few times."
+      },
+      {
+        "name": "Regular",
+        "price": "$60",
+        "credits": 300,
+        "runs": 25,
+        "perRun": "$2.40",
+        "desc": "A run before every release for the better part of a year."
+      },
+      {
+        "name": "Heavy",
+        "price": "$180",
+        "credits": 1200,
+        "runs": 100,
+        "perRun": "$1.80",
+        "desc": "Several repositories, or a small team running it on every branch."
+      }
+    ]
+  },
+  "privacy": {
+    "note": "None of the above is live yet, because nothing has shipped. It is a commitment about how the product will behave, published now so it can be held against what launches.",
+    "facts": [
+      {
+        "question": "Access requested",
+        "answer": "Read-only. VibeCaddie never needs write access, and will not ask for it."
+      },
+      {
+        "question": "What it reads",
+        "answer": "The contents of the repositories you point it at, at the commit you run against."
+      },
+      {
+        "question": "What is stored",
+        "answer": "The report: findings, file paths, line numbers and the short excerpts quoted in them."
+      },
+      {
+        "question": "What is not stored",
+        "answer": "A copy of your repository. Source is read for the run and discarded when it ends."
+      },
+      {
+        "question": "Training",
+        "answer": "Your code is never used to train a model. Not ours, not a vendor’s."
+      },
+      {
+        "question": "Model providers",
+        "answer": "Audits run through a third-party model API under a zero-retention agreement. The provider is named in the docs before launch."
+      },
+      {
+        "question": "Who can see a report",
+        "answer": "You, and anyone you give access to the repository. Reports are not public and are not shared."
+      },
+      {
+        "question": "Deletion",
+        "answer": "Deleting a report deletes its findings and excerpts. Removing the app ends all access immediately."
+      }
+    ]
+  },
+  "faq": [
+    {
+      "q": "Is this available yet?",
+      "a": "No. The GitHub app is not built and not listed, no audit has ever run, and no credits can be bought. The site and the early-access list are the only things that exist."
+    },
+    {
+      "q": "Is it a replacement for a security review?",
+      "a": "No. It is a second pair of eyes for people who do not have one. A clean report means nothing it looked for turned up, which is not the same as nothing being there."
+    },
+    {
+      "q": "Does it write code or open pull requests?",
+      "a": "No. It reads, it reports, and it suggests. Every change is yours to make, which is also why read-only access is enough."
+    },
+    {
+      "q": "What does a run cost?",
+      "a": "A run is 12 credits, whatever the size of the repository. Credit packs are planned at $15, $60 and $180, which works out between $1.80 and $3.00 a run. Nothing is on sale yet."
+    },
+    {
+      "q": "Why credits instead of a subscription?",
+      "a": "Because a review is a thing you do occasionally, not continuously. A subscription would charge you in the months you shipped nothing."
+    },
+    {
+      "q": "Which languages does it cover?",
+      "a": "The review skills are written against patterns rather than syntax, so the intent is broad coverage. Exactly what is supported at launch will be listed here before launch, not promised now."
+    },
+    {
+      "q": "Does my code train a model?",
+      "a": "No. See the privacy page, which says what is stored, what is not, and what the model provider is allowed to do with it."
+    }
+  ],
+  "contact": "contact@vibecaddie.com",
+  "github": "https://github.com/VibeCaddie",
+  "generated": "2026-09-10"
+}

@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 240" aria-label="Caddie mascot reading a clipboard">
+          <ellipse cx="80" cy="222" rx="22" ry="9" fill="#0a0c0b"/><ellipse cx="130" cy="222" rx="22" ry="9" fill="#0a0c0b"/>
+          <line x1="60" y1="150" x2="70" y2="200" stroke="#0a0c0b" stroke-width="22" stroke-linecap="round"/><line x1="60" y1="150" x2="70" y2="200" stroke="#f3e9d6" stroke-width="12" stroke-linecap="round"/>
+          <line x1="150" y1="150" x2="140" y2="200" stroke="#0a0c0b" stroke-width="22" stroke-linecap="round"/><line x1="150" y1="150" x2="140" y2="200" stroke="#f3e9d6" stroke-width="12" stroke-linecap="round"/>
+          <circle cx="105" cy="140" r="72" fill="#f3e9d6" stroke="#0a0c0b" stroke-width="6"/>
+          <path d="M40 112 A65 65 0 0 1 170 112 Z" fill="#4ade80" stroke="#0a0c0b" stroke-width="6" stroke-linejoin="round"/>
+          <path d="M44 112 L178 112 Q188 118 174 126 L46 122 Z" fill="#4ade80" stroke="#0a0c0b" stroke-width="6" stroke-linejoin="round"/>
+          <circle cx="105" cy="70" r="7" fill="#0a0c0b"/>
+          <circle cx="82" cy="146" r="14" fill="#fff" stroke="#0a0c0b" stroke-width="5"/><circle cx="128" cy="146" r="14" fill="#fff" stroke="#0a0c0b" stroke-width="5"/>
+          <circle cx="82" cy="152" r="6" fill="#0a0c0b"/><circle cx="128" cy="152" r="6" fill="#0a0c0b"/>
+          <path d="M96 172 q10 4 20 0" stroke="#0a0c0b" stroke-width="5" fill="none" stroke-linecap="round"/>
+          <rect x="58" y="188" width="94" height="52" rx="6" fill="#e6eae7" stroke="#0a0c0b" stroke-width="6"/>
+          <rect x="92" y="180" width="26" height="14" rx="4" fill="#4ade80" stroke="#0a0c0b" stroke-width="5"/>
+          <line x1="72" y1="208" x2="136" y2="208" stroke="#0a0c0b" stroke-width="4" stroke-linecap="round"/><line x1="72" y1="222" x2="118" y2="222" stroke="#0a0c0b" stroke-width="4" stroke-linecap="round"/>
+        </svg>

@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 240" aria-label="Caddie mascot holding up a flag">
+          <line x1="178" y1="20" x2="178" y2="150" stroke="#0a0c0b" stroke-width="12" stroke-linecap="round"/><line x1="178" y1="20" x2="178" y2="150" stroke="#c9d1cc" stroke-width="5" stroke-linecap="round"/>
+          <path d="M181 22 L232 42 L181 62 Z" fill="#4ade80" stroke="#0a0c0b" stroke-width="5" stroke-linejoin="round"/>
+          <ellipse cx="80" cy="222" rx="22" ry="9" fill="#0a0c0b"/><ellipse cx="130" cy="222" rx="22" ry="9" fill="#0a0c0b"/>
+          <line x1="150" y1="140" x2="178" y2="100" stroke="#0a0c0b" stroke-width="22" stroke-linecap="round"/><line x1="150" y1="140" x2="178" y2="100" stroke="#f3e9d6" stroke-width="12" stroke-linecap="round"/>
+          <line x1="60" y1="150" x2="40" y2="190" stroke="#0a0c0b" stroke-width="22" stroke-linecap="round"/><line x1="60" y1="150" x2="40" y2="190" stroke="#f3e9d6" stroke-width="12" stroke-linecap="round"/>
+          <circle cx="105" cy="140" r="72" fill="#f3e9d6" stroke="#0a0c0b" stroke-width="6"/>
+          <path d="M40 112 A65 65 0 0 1 170 112 Z" fill="#4ade80" stroke="#0a0c0b" stroke-width="6" stroke-linejoin="round"/>
+          <path d="M44 112 L178 112 Q188 118 174 126 L46 122 Z" fill="#4ade80" stroke="#0a0c0b" stroke-width="6" stroke-linejoin="round"/>
+          <circle cx="105" cy="70" r="7" fill="#0a0c0b"/>
+          <circle cx="82" cy="146" r="14" fill="#fff" stroke="#0a0c0b" stroke-width="5"/><circle cx="128" cy="146" r="14" fill="#fff" stroke="#0a0c0b" stroke-width="5"/>
+          <circle cx="84" cy="142" r="6" fill="#0a0c0b"/><circle cx="130" cy="142" r="6" fill="#0a0c0b"/>
+          <path d="M90 172 q15 14 30 0" stroke="#0a0c0b" stroke-width="5" fill="none" stroke-linecap="round"/>
+        </svg>

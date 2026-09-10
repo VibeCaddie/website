@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>VibeCaddie — a code review agent for the code you did not write</title>
+<meta name="description" content="VibeCaddie audits AI-assisted code. It reads a repository, loads only the review skills that apply, and returns findings ranked by severity with the file, the line and a suggested fix. Pre-launch.">
+<link rel="canonical" href="https://vibecaddie.com/">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="VibeCaddie">
+<meta property="og:title" content="VibeCaddie — a code review agent for the code you did not write">
+<meta property="og:description" content="VibeCaddie audits AI-assisted code. It reads a repository, loads only the review skills that apply, and returns findings ranked by severity with the file, the line and a suggested fix. Pre-launch.">
+<meta property="og:url" content="https://vibecaddie.com/">
+<meta property="og:image" content="https://vibecaddie.com/assets/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="VibeCaddie — a code review agent for the code you did not write">
+<meta name="twitter:description" content="VibeCaddie audits AI-assisted code. It reads a repository, loads only the review skills that apply, and returns findings ranked by severity with the file, the line and a suggested fix. Pre-launch.">
+<meta name="twitter:image" content="https://vibecaddie.com/assets/og.png">
+
+<meta name="theme-color" content="#0a0c0b">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+
+<link rel="alternate" type="text/plain" href="/llms.txt" title="Plain-text brief for language models">
+<link rel="alternate" type="application/json" href="/vibecaddie.json" title="VibeCaddie as JSON">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/vc.css">
+
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://vibecaddie.com/#org","name":"VibeCaddie","url":"https://vibecaddie.com","email":"contact@vibecaddie.com","sameAs":["https://github.com/VibeCaddie","https://factory0.ventures"],"parentOrganization":{"@type":"Organization","name":"Factory Zero","url":"https://factory0.ventures"}},{"@type":"WebSite","@id":"https://vibecaddie.com/#site","url":"https://vibecaddie.com","name":"VibeCaddie","description":"VibeCaddie audits the code you did not fully write. Point it at a repository, run it, and get a ranked list of what to fix before it bites you.","publisher":{"@id":"https://vibecaddie.com/#org"}},{"@type":"SoftwareApplication","@id":"https://vibecaddie.com/#app","name":"VibeCaddie","applicationCategory":"DeveloperApplication","operatingSystem":"Web","description":"VibeCaddie audits the code you did not fully write. Point it at a repository, run it, and get a ranked list of what to fix before it bites you.","offers":[{"@type":"Offer","name":"Starter — 60 credits","price":"15","priceCurrency":"USD","availability":"https://schema.org/PreOrder","description":"Enough to audit one project, fix it, and run it again a few times."},{"@type":"Offer","name":"Regular — 300 credits","price":"60","priceCurrency":"USD","availability":"https://schema.org/PreOrder","description":"A run before every release for the better part of a year."},{"@type":"Offer","name":"Heavy — 1200 credits","price":"180","priceCurrency":"USD","availability":"https://schema.org/PreOrder","description":"Several repositories, or a small team running it on every branch."}]},{"@type":"FAQPage","@id":"https://vibecaddie.com/#faq","mainEntity":[{"@type":"Question","name":"Is this available yet?","acceptedAnswer":{"@type":"Answer","text":"No. The GitHub app is not built and not listed, no audit has ever run, and no credits can be bought. The site and the early-access list are the only things that exist."}},{"@type":"Question","name":"Is it a replacement for a security review?","acceptedAnswer":{"@type":"Answer","text":"No. It is a second pair of eyes for people who do not have one. A clean report means nothing it looked for turned up, which is not the same as nothing being there."}},{"@type":"Question","name":"Does it write code or open pull requests?","acceptedAnswer":{"@type":"Answer","text":"No. It reads, it reports, and it suggests. Every change is yours to make, which is also why read-only access is enough."}},{"@type":"Question","name":"What does a run cost?","acceptedAnswer":{"@type":"Answer","text":"A run is 12 credits, whatever the size of the repository. Credit packs are planned at $15, $60 and $180, which works out between $1.80 and $3.00 a run. Nothing is on sale yet."}},{"@type":"Question","name":"Why credits instead of a subscription?","acceptedAnswer":{"@type":"Answer","text":"Because a review is a thing you do occasionally, not continuously. A subscription would charge you in the months you shipped nothing."}},{"@type":"Question","name":"Which languages does it cover?","acceptedAnswer":{"@type":"Answer","text":"The review skills are written against patterns rather than syntax, so the intent is broad coverage. Exactly what is supported at launch will be listed here before launch, not promised now."}},{"@type":"Question","name":"Does my code train a model?","acceptedAnswer":{"@type":"Answer","text":"No. See the privacy page, which says what is stored, what is not, and what the model provider is allowed to do with it."}}]}]}</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<div class="status-bar">
+  <div class="wrap"><b>Pre-launch.</b> <span>The GitHub app is not built yet. Nothing here can be installed or bought.</span></div>
+</div>
+
+<nav class="nav" data-open="false">
+  <div class="wrap">
+    <a class="wordmark" href="/"><span class="mark" aria-hidden="true"></span>VibeCaddie</a>
+    <button class="nav-toggle" type="button" aria-controls="nav-links">Menu</button>
+    <div class="nav-links" id="nav-links">
+      <a href="/how-it-works/">How it works</a>
+      <a href="/skills/">Skills</a>
+      <a href="/pricing/">Credits</a>
+      <a href="/privacy/">Privacy</a>
+      <a class="btn btn-primary btn-sm" href="/#early-access">Get early access</a>
+    </div>
+  </div>
+</nav>
+<main id="main">
+
+<section class="hero">
+  <div class="hero-grid" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="hero-col">
+      <span class="pill"><span class="dot"></span>GitHub app &middot; audits AI-assisted code</span>
+      <h1 style="margin:24px 0 0">You take the shot.<br><span class="accent">We read the green.</span></h1>
+      <p class="lede" style="margin:24px 0 0;max-width:520px">VibeCaddie audits the code you did not fully write. Point it at a repository, run it, and get a ranked list of what to fix before it bites you.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#early-access">Get early access</a>
+        <span class="hero-note">12 credits per run &middot; no subscription</span>
+      </div>
+    </div>
+    <div class="hero-col">
+      <div class="mascot mascot--hero" aria-hidden="true"><div class="float"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 240" aria-label="Caddie mascot handing over a club">
+        <line x1="150" y1="60" x2="212" y2="196" stroke="#0a0c0b" stroke-width="12" stroke-linecap="round"/>
+        <line x1="150" y1="60" x2="212" y2="196" stroke="#c9d1cc" stroke-width="5" stroke-linecap="round"/>
+        <path d="M204 190 q18 -6 24 12 q-14 8 -30 2z" fill="#4ade80" stroke="#0a0c0b" stroke-width="5" stroke-linejoin="round"/>
+        <ellipse cx="80" cy="222" rx="22" ry="9" fill="#0a0c0b"/><ellipse cx="130" cy="222" rx="22" ry="9" fill="#0a0c0b"/>
+        <line x1="112" y1="150" x2="160" y2="92" stroke="#0a0c0b" stroke-width="22" stroke-linecap="round"/>
+        <line x1="112" y1="150" x2="160" y2="92" stroke="#f3e9d6" stroke-width="12" stroke-linecap="round"/>
+        <line x1="60" y1="150" x2="40" y2="190" stroke="#0a0c0b" stroke-width="22" stroke-linecap="round"/>
+        <line x1="60" y1="150" x2="40" y2="190" stroke="#f3e9d6" stroke-width="12" stroke-linecap="round"/>
+        <circle cx="105" cy="140" r="72" fill="#f3e9d6" stroke="#0a0c0b" stroke-width="6"/>
+        <path d="M40 112 A65 65 0 0 1 170 112 Z" fill="#4ade80" stroke="#0a0c0b" stroke-width="6" stroke-linejoin="round"/>
+        <path d="M44 112 L178 112 Q188 118 174 126 L46 122 Z" fill="#4ade80" stroke="#0a0c0b" stroke-width="6" stroke-linejoin="round"/>
+        <circle cx="105" cy="70" r="7" fill="#0a0c0b"/>
+        <circle cx="82" cy="146" r="14" fill="#fff" stroke="#0a0c0b" stroke-width="5"/><circle cx="128" cy="146" r="14" fill="#fff" stroke="#0a0c0b" stroke-width="5"/>
+        <circle cx="86" cy="147" r="6" fill="#0a0c0b"/><circle cx="132" cy="147" r="6" fill="#0a0c0b"/>
+        <path d="M66 126 q14 -10 30 -2" stroke="#0a0c0b" stroke-width="5" fill="none" stroke-linecap="round"/>
+        <path d="M92 174 q14 12 28 0" stroke="#0a0c0b" stroke-width="5" fill="none" stroke-linecap="round"/>
+      </svg></div></div>
+      
+  <div class="term" data-term>
+    <div class="term-bar">
+      <i></i><i></i><i></i><span>vibecaddie &middot; acme/checkout</span>
+    </div>
+    <div class="term-body">
+      <div class="term-line is-cmd"><span class="pre">$</span><span class="txt">vibecaddie audit acme/checkout</span></div>
+      <div class="term-line"><span class="pre">→</span><span class="txt">reading repo … 42 files</span></div>
+      <div class="term-line"><span class="pre">→</span><span class="txt">detected: Next.js 15 · Prisma · Stripe webhooks</span></div>
+      <div class="term-line"><span class="pre">→</span><span class="txt">loading skills: auth, secrets, input-validation,</span></div>
+      <div class="term-line"><span class="pre"> </span><span class="txt">data-exposure, dependencies, error-handling</span></div>
+      <div class="term-line"><span class="pre">→</span><span class="txt">auditing …</span></div>
+      <div class="term-line is-ok"><span class="pre">✓</span><span class="txt">2 critical · 3 warnings · 4 notes</span></div>
+      <div class="term-line"><span class="pre">·</span><span class="txt">done in 1m 48s · 12 credits</span></div>
+      <span class="caret" hidden></span>
+    </div>
+  </div>
+    </div>
+  </div>
+</section>
+
+<section class="section wrap" data-reveal style="border-top:1px solid var(--line-2)">
+  <div class="two-col">
+    <h2>You built it in an afternoon. Nobody has checked it.</h2>
+    <div class="stack">
+      <p class="body">AI tools made it easy to produce working code fast. They did not make it easy to know whether that code is safe to ship. An auth flow can work perfectly and still trust client input, leak a session, or log a secret.</p>
+      <p class="body">The usual safety net is a second pair of eyes. Most people shipping AI-assisted code do not have one, and the scanners built for teams assume a security engineer is standing by to triage the noise.</p>
+      <p class="body strong-line">Bad code usually works. That is the problem.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section-tight wrap" id="how" data-reveal>
+  <p class="kicker">How it works</p>
+  <div class="cards" style="margin-top:26px">
+    <div class="card">
+      <div class="n">01</div>
+      <h3>Point it at a repo</h3>
+      <p>Read-only access to the repositories you want watched. Nothing to configure.</p>
+    </div>
+    <div class="card">
+      <div class="n">02</div>
+      <h3>The agent picks its skills</h3>
+      <p>It reads the repo, works out what kind of codebase it is, and loads the review skills that matter for it.</p>
+    </div>
+    <div class="card">
+      <div class="n">03</div>
+      <h3>You get a report</h3>
+      <p>Findings ranked by severity, with exact files and lines, a plain explanation, and a suggested fix.</p>
+    </div>
+  </div>
+  <p class="body" style="margin-top:24px"><a href="/how-it-works/" style="color:var(--green)">Read how a run actually works &rarr;</a></p>
+</section>
+
+<section class="band" id="report">
+  <div class="section wrap">
+    <div class="two-col center" style="margin-bottom:32px" data-reveal>
+      <div>
+        <p class="kicker">The report</p>
+        <h2 style="margin-top:14px">Five real problems beat fifty warnings.</h2>
+      </div>
+      <div class="stack">
+        <p class="body">Every finding says what is wrong, why it matters, and what to do. Clean means nothing we looked for turned up. It does not mean nothing is there.</p>
+        <p><span class="sample-note">Sample &middot; illustrative, no audit has run</span></p>
+      </div>
+    </div>
+    <div data-reveal>
+    <div style="position:relative">
+      <div class="mascot mascot--report" aria-hidden="true"><div class="float"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 240" aria-label="Caddie mascot reading a clipboard">
+          <ellipse cx="80" cy="222" rx="22" ry="9" fill="#0a0c0b"/><ellipse cx="130" cy="222" rx="22" ry="9" fill="#0a0c0b"/>
+          <line x1="60" y1="150" x2="70" y2="200" stroke="#0a0c0b" stroke-width="22" stroke-linecap="round"/><line x1="60" y1="150" x2="70" y2="200" stroke="#f3e9d6" stroke-width="12" stroke-linecap="round"/>
+          <line x1="150" y1="150" x2="140" y2="200" stroke="#0a0c0b" stroke-width="22" stroke-linecap="round"/><line x1="150" y1="150" x2="140" y2="200" stroke="#f3e9d6" stroke-width="12" stroke-linecap="round"/>
+          <circle cx="105" cy="140" r="72" fill="#f3e9d6" stroke="#0a0c0b" stroke-width="6"/>
+          <path d="M40 112 A65 65 0 0 1 170 112 Z" fill="#4ade80" stroke="#0a0c0b" stroke-width="6" stroke-linejoin="round"/>
+          <path d="M44 112 L178 112 Q188 118 174 126 L46 122 Z" fill="#4ade80" stroke="#0a0c0b" stroke-width="6" stroke-linejoin="round"/>
+          <circle cx="105" cy="70" r="7" fill="#0a0c0b"/>
+          <circle cx="82" cy="146" r="14" fill="#fff" stroke="#0a0c0b" stroke-width="5"/><circle cx="128" cy="146" r="14" fill="#fff" stroke="#0a0c0b" stroke-width="5"/>
+          <circle cx="82" cy="152" r="6" fill="#0a0c0b"/><circle cx="128" cy="152" r="6" fill="#0a0c0b"/>
+          <path d="M96 172 q10 4 20 0" stroke="#0a0c0b" stroke-width="5" fill="none" stroke-linecap="round"/>
+          <rect x="58" y="188" width="94" height="52" rx="6" fill="#e6eae7" stroke="#0a0c0b" stroke-width="6"/>
+          <rect x="92" y="180" width="26" height="14" rx="4" fill="#4ade80" stroke="#0a0c0b" stroke-width="5"/>
+          <line x1="72" y1="208" x2="136" y2="208" stroke="#0a0c0b" stroke-width="4" stroke-linecap="round"/><line x1="72" y1="222" x2="118" y2="222" stroke="#0a0c0b" stroke-width="4" stroke-linecap="round"/>
+        </svg></div></div>
+      <div class="report" data-report>
+        <div class="report-head">
+          <div><b>Sample audit</b> <span class="repo">acme/checkout &middot; main @ 3f9c2e1</span></div>
+          <div class="chips">
+            <span class="chip critical">2 critical</span>
+            <span class="chip warning">3 warnings</span>
+            <span class="chip note">4 notes</span>
+          </div>
+        </div>
+        <div class="report-scope">Reviewed 42 files across 6 skills: auth, secrets, input-validation, data-exposure, dependencies, error-handling. Findings are limited to what those skills look for.</div>
+        <div class="report-body">
+          <div class="finding-list" role="tablist" aria-label="Sample findings">
+        <button type="button" class="finding" role="tab" data-for="f0" aria-selected="true">
+          <span class="dot critical"></span>
+          <span style="min-width:0">
+            <span class="t">Session token accepted from query string</span>
+            <span class="p">src/lib/auth/session.ts:41</span>
+          </span>
+        </button>
+        <button type="button" class="finding" role="tab" data-for="f1" aria-selected="false">
+          <span class="dot critical"></span>
+          <span style="min-width:0">
+            <span class="t">Stripe webhook signature not verified</span>
+            <span class="p">app/api/webhooks/stripe/route.ts:12</span>
+          </span>
+        </button>
+        <button type="button" class="finding" role="tab" data-for="f2" aria-selected="false">
+          <span class="dot warning"></span>
+          <span style="min-width:0">
+            <span class="t">Raw error object returned to client</span>
+            <span class="p">app/api/orders/route.ts:88</span>
+          </span>
+        </button>
+        <button type="button" class="finding" role="tab" data-for="f3" aria-selected="false">
+          <span class="dot warning"></span>
+          <span style="min-width:0">
+            <span class="t">User email logged at info level</span>
+            <span class="p">src/lib/logger.ts:27</span>
+          </span>
+        </button>
+        <button type="button" class="finding" role="tab" data-for="f4" aria-selected="false">
+          <span class="dot warning"></span>
+          <span style="min-width:0">
+            <span class="t">lodash 4.17.15 has a known prototype pollution issue</span>
+            <span class="p">package.json:23</span>
+          </span>
+        </button>
+            <div class="finding-more">+ 4 notes &middot; collapsed</div>
+          </div>
+          <div>
+        <div class="detail" data-detail="f0">
+          <div class="detail-meta">
+            <span class="sev critical">critical</span>
+            <span class="dim">auth</span>
+          </div>
+          <h3>Session token accepted from query string</h3>
+          <div class="detail-path">src/lib/auth/session.ts:41</div>
+          <div class="detail-grid">
+            <div><span class="label">What is wrong</span>getSession falls back to req.query.token when the cookie is missing.</div>
+            <div><span class="label">Why it matters</span>Tokens in URLs end up in browser history, referrer headers and your own access logs. Anyone with log access can replay a session.</div>
+            <div><span class="label">Suggested fix</span>Read the token from the cookie only, and return 401 when it is absent.</div>
+          </div>
+          <div class="diff">
+            <div>  const cookies = parseCookies(req)</div>
+            <div class="del">- const token = cookies.get('sid') ?? req.query.token</div>
+            <div class="add">+ const token = cookies.get('sid')</div>
+            <div class="add">+ if (!token) return unauthorized()</div>
+          </div>
+        </div>
+        <div class="detail" data-detail="f1" hidden>
+          <div class="detail-meta">
+            <span class="sev critical">critical</span>
+            <span class="dim">payments</span>
+          </div>
+          <h3>Stripe webhook signature not verified</h3>
+          <div class="detail-path">app/api/webhooks/stripe/route.ts:12</div>
+          <div class="detail-grid">
+            <div><span class="label">What is wrong</span>The handler parses the event body directly instead of calling stripe.webhooks.constructEvent.</div>
+            <div><span class="label">Why it matters</span>Anyone who finds the endpoint can post a fake checkout.session.completed event and unlock a paid plan.</div>
+            <div><span class="label">Suggested fix</span>Verify the Stripe-Signature header against your webhook secret before trusting the payload.</div>
+          </div>
+          <div class="diff">
+            <div class="del">- const event = await req.json()</div>
+            <div class="add">+ const sig = req.headers.get('stripe-signature')</div>
+            <div class="add">+ const event = stripe.webhooks.constructEvent(</div>
+            <div class="add">+   await req.text(), sig, process.env.STRIPE_WEBHOOK_SECRET)</div>
+          </div>
+        </div>
+        <div class="detail" data-detail="f2" hidden>
+          <div class="detail-meta">
+            <span class="sev warning">warning</span>
+            <span class="dim">error-handling</span>
+          </div>
+          <h3>Raw error object returned to client</h3>
+          <div class="detail-path">app/api/orders/route.ts:88</div>
+          <div class="detail-grid">
+            <div><span class="label">What is wrong</span>The catch block sends err.message and err.stack in the 500 response.</div>
+            <div><span class="label">Why it matters</span>Stack traces reveal file paths, dependency versions and sometimes query text.</div>
+            <div><span class="label">Suggested fix</span>Log the error server side and return a generic message with a request id.</div>
+          </div>
+          <div class="diff">
+            <div class="del">- return json({ error: err.message, stack: err.stack }, 500)</div>
+            <div class="add">+ log.error({ err, requestId })</div>
+            <div class="add">+ return json({ error: 'Something went wrong', requestId }, 500)</div>
+          </div>
+        </div>
+        <div class="detail" data-detail="f3" hidden>
+          <div class="detail-meta">
+            <span class="sev warning">warning</span>
+            <span class="dim">data-exposure</span>
+          </div>
+          <h3>User email logged at info level</h3>
+          <div class="detail-path">src/lib/logger.ts:27</div>
+          <div class="detail-grid">
+            <div><span class="label">What is wrong</span>Every request log line includes the authenticated user’s email address.</div>
+            <div><span class="label">Why it matters</span>Log retention is usually longer than you think, and shared with more vendors than you think.</div>
+            <div><span class="label">Suggested fix</span>Log the user id instead, or hash the email if you need to correlate.</div>
+          </div>
+          <div class="diff">
+            <div class="del">- log.info({ path, email: user.email })</div>
+            <div class="add">+ log.info({ path, userId: user.id })</div>
+          </div>
+        </div>
+        <div class="detail" data-detail="f4" hidden>
+          <div class="detail-meta">
+            <span class="sev warning">warning</span>
+            <span class="dim">dependencies</span>
+          </div>
+          <h3>lodash 4.17.15 has a known prototype pollution issue</h3>
+          <div class="detail-path">package.json:23</div>
+          <div class="detail-grid">
+            <div><span class="label">What is wrong</span>lodash is pinned below 4.17.21, which fixes CVE-2021-23337 and CVE-2020-28500.</div>
+            <div><span class="label">Why it matters</span>Your code passes user-supplied objects to _.merge in two places.</div>
+            <div><span class="label">Suggested fix</span>Bump to 4.17.21 or later and run the audit again.</div>
+          </div>
+          <div class="diff">
+            <div class="del">- &quot;lodash&quot;: &quot;4.17.15&quot;</div>
+            <div class="add">+ &quot;lodash&quot;: &quot;^4.17.21&quot;</div>
+          </div>
+        </div></div>
+        </div>
+      </div>
+    </div></div>
+  </div>
+</section>
+
+<section class="section wrap" data-reveal>
+  <div class="two-col center">
+    <div>
+      <p class="kicker">Skills</p>
+      <h2 style="margin-top:14px">The caddie picks the club.</h2>
+      <p class="body" style="margin-top:18px">You never configure these. The agent reads the repository, works out what it is, and loads the review skills that apply. A Stripe integration gets the webhook skill. A CLI does not.</p>
+      <div class="detect-row">
+        <span class="dim">Detected:</span>
+        <span class="detect-name" data-detect-name>acme/checkout</span>
+      </div>
+      <div class="mono dim" style="margin-top:10px;font-size:12px" data-detect-stack>Next.js · Prisma · Stripe · Postgres</div>
+      <p class="body" style="margin-top:20px"><a href="/skills/" style="color:var(--green)">All twelve skills &rarr;</a></p>
+    </div>
+    <div style="position:relative">
+      <div class="skill-cloud" data-skills="[{&quot;name&quot;:&quot;acme/checkout&quot;,&quot;stack&quot;:&quot;Next.js · Prisma · Stripe · Postgres&quot;,&quot;on&quot;:[0,1,2,3,4,5,7,8,10]},{&quot;name&quot;:&quot;dana/ledger-cli&quot;,&quot;stack&quot;:&quot;Go · Cobra · SQLite&quot;,&quot;on&quot;:[1,2,3,4,10]},{&quot;name&quot;:&quot;studio/media-api&quot;,&quot;stack&quot;:&quot;Express · S3 · Redis · JWT&quot;,&quot;on&quot;:[0,1,3,5,6,8,9,11]}]">
+        <div class="mascot mascot--skills" aria-hidden="true"><div class="float"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 240" aria-label="Caddie mascot holding up a flag">
+          <line x1="178" y1="20" x2="178" y2="150" stroke="#0a0c0b" stroke-width="12" stroke-linecap="round"/><line x1="178" y1="20" x2="178" y2="150" stroke="#c9d1cc" stroke-width="5" stroke-linecap="round"/>
+          <path d="M181 22 L232 42 L181 62 Z" fill="#4ade80" stroke="#0a0c0b" stroke-width="5" stroke-linejoin="round"/>
+          <ellipse cx="80" cy="222" rx="22" ry="9" fill="#0a0c0b"/><ellipse cx="130" cy="222" rx="22" ry="9" fill="#0a0c0b"/>
+          <line x1="150" y1="140" x2="178" y2="100" stroke="#0a0c0b" stroke-width="22" stroke-linecap="round"/><line x1="150" y1="140" x2="178" y2="100" stroke="#f3e9d6" stroke-width="12" stroke-linecap="round"/>
+          <line x1="60" y1="150" x2="40" y2="190" stroke="#0a0c0b" stroke-width="22" stroke-linecap="round"/><line x1="60" y1="150" x2="40" y2="190" stroke="#f3e9d6" stroke-width="12" stroke-linecap="round"/>
+          <circle cx="105" cy="140" r="72" fill="#f3e9d6" stroke="#0a0c0b" stroke-width="6"/>
+          <path d="M40 112 A65 65 0 0 1 170 112 Z" fill="#4ade80" stroke="#0a0c0b" stroke-width="6" stroke-linejoin="round"/>
+          <path d="M44 112 L178 112 Q188 118 174 126 L46 122 Z" fill="#4ade80" stroke="#0a0c0b" stroke-width="6" stroke-linejoin="round"/>
+          <circle cx="105" cy="70" r="7" fill="#0a0c0b"/>
+          <circle cx="82" cy="146" r="14" fill="#fff" stroke="#0a0c0b" stroke-width="5"/><circle cx="128" cy="146" r="14" fill="#fff" stroke="#0a0c0b" stroke-width="5"/>
+          <circle cx="84" cy="142" r="6" fill="#0a0c0b"/><circle cx="130" cy="142" r="6" fill="#0a0c0b"/>
+          <path d="M90 172 q15 14 30 0" stroke="#0a0c0b" stroke-width="5" fill="none" stroke-linecap="round"/>
+        </svg></div></div>
+        <span class="skill-tag on"><span class="dot"></span>Auth &amp; sessions<span class="loaded">loaded</span></span>
+        <span class="skill-tag on"><span class="dot"></span>Secrets handling<span class="loaded">loaded</span></span>
+        <span class="skill-tag on"><span class="dot"></span>Dependency risk<span class="loaded">loaded</span></span>
+        <span class="skill-tag on"><span class="dot"></span>Input validation<span class="loaded">loaded</span></span>
+        <span class="skill-tag on"><span class="dot"></span>Error handling<span class="loaded">loaded</span></span>
+        <span class="skill-tag on"><span class="dot"></span>Data exposure<span class="loaded">loaded</span></span>
+        <span class="skill-tag"><span class="dot"></span>Performance<span class="loaded">loaded</span></span>
+        <span class="skill-tag on"><span class="dot"></span>Payments &amp; webhooks<span class="loaded">loaded</span></span>
+        <span class="skill-tag on"><span class="dot"></span>Rate limiting<span class="loaded">loaded</span></span>
+        <span class="skill-tag"><span class="dot"></span>File uploads<span class="loaded">loaded</span></span>
+        <span class="skill-tag on"><span class="dot"></span>SQL &amp; ORM<span class="loaded">loaded</span></span>
+        <span class="skill-tag"><span class="dot"></span>CORS &amp; headers<span class="loaded">loaded</span></span>
+      </div></div>
+  </div>
+</section>
+
+<section class="band">
+  <div class="section wrap two-col center" data-reveal>
+    
+    <div class="loop-fig" data-loop>
+      <svg viewBox="0 0 420 420" width="380" height="380" role="img" aria-label="The audit loop: Audit, then Fix, then Re-run, then Repeat, repeating">
+        <circle cx="210" cy="210" r="150" fill="none" stroke="rgba(255,255,255,.08)" stroke-width="2"/>
+        <circle class="loop-ring" cx="210" cy="210" r="150" fill="none" stroke="#4ade80" stroke-width="2"/>
+        <g class="loop-orbit"><circle cx="210" cy="60" r="7" fill="#4ade80"/></g>
+        <g class="loop-node on">
+          <circle cx="210" cy="60" r="34"/>
+          <text x="210" y="60" text-anchor="middle" dominant-baseline="central">Audit</text>
+        </g>
+        <g class="loop-node">
+          <circle cx="360" cy="210" r="34"/>
+          <text x="360" y="210" text-anchor="middle" dominant-baseline="central">Fix</text>
+        </g>
+        <g class="loop-node">
+          <circle cx="210" cy="360" r="34"/>
+          <text x="210" y="360" text-anchor="middle" dominant-baseline="central">Re-run</text>
+        </g>
+        <g class="loop-node">
+          <circle cx="60" cy="210" r="34"/>
+          <text x="60" y="210" text-anchor="middle" dominant-baseline="central">Repeat</text>
+        </g>
+        <text x="210" y="200" text-anchor="middle" fill="#6b746e" font-family="IBM Plex Mono,monospace" font-size="12">run</text>
+        <text x="210" y="228" text-anchor="middle" fill="#e6eae7" font-family="IBM Plex Mono,monospace" font-size="26" font-weight="500" data-run-no>#1</text>
+      </svg>
+    </div>
+    <div>
+      <p class="kicker">The loop</p>
+      <h2 style="margin-top:14px">A loop, not a gate.</h2>
+      <p class="body" style="margin-top:16px">Run the audit. Fix what it found. Run it again. Each run costs the same 12 credits, so you always know what the next pass will cost before you start it.</p>
+      <p class="body" style="margin-top:16px">Repeat until the report comes back clean, or until you decide the rest can wait. That call is yours.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section wrap" id="pricing" data-reveal style="position:relative">
+  <div style="text-align:center;max-width:640px;margin:0 auto">
+    <p class="kicker">Credits</p>
+    <h2 style="margin-top:14px">Prepaid. One run is 12 credits.</h2>
+    <p class="lede" style="margin-top:16px">No subscription. Credits do not expire. The price of a run is on the button before you press it.</p>
+    <p style="margin-top:14px"><span class="sample-note">Planned pricing &middot; nothing is on sale yet</span></p>
+  </div>
+  <div style="margin-top:44px">
+    <div class="packs">
+      <div class="pack">
+        <div class="pack-name">Starter</div>
+        <div class="pack-price"><b>$15</b><span>once</span></div>
+        <div class="pack-rows">
+          <div><span>credits</span><b>60</b></div>
+          <div><span>runs</span><b>5</b></div>
+          <div><span>per run</span><span class="per">$3.00</span></div>
+        </div>
+        <p class="pack-desc">Enough to audit one project, fix it, and run it again a few times.</p>
+        <div class="pack-cta">Not on sale yet</div>
+      </div>
+      <div class="pack">
+        <div class="pack-name">Regular</div>
+        <div class="pack-price"><b>$60</b><span>once</span></div>
+        <div class="pack-rows">
+          <div><span>credits</span><b>300</b></div>
+          <div><span>runs</span><b>25</b></div>
+          <div><span>per run</span><span class="per">$2.40</span></div>
+        </div>
+        <p class="pack-desc">A run before every release for the better part of a year.</p>
+        <div class="pack-cta">Not on sale yet</div>
+      </div>
+      <div class="pack">
+        <div class="pack-name">Heavy</div>
+        <div class="pack-price"><b>$180</b><span>once</span></div>
+        <div class="pack-rows">
+          <div><span>credits</span><b>1200</b></div>
+          <div><span>runs</span><b>100</b></div>
+          <div><span>per run</span><span class="per">$1.80</span></div>
+        </div>
+        <p class="pack-desc">Several repositories, or a small team running it on every branch.</p>
+        <div class="pack-cta">Not on sale yet</div>
+      </div>
+    </div></div>
+  <div class="mascot mascot--price" aria-hidden="true"><div class="float"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 240" aria-label="Caddie mascot giving a thumbs up">
+      <ellipse cx="80" cy="222" rx="22" ry="9" fill="#0a0c0b"/><ellipse cx="130" cy="222" rx="22" ry="9" fill="#0a0c0b"/>
+      <line x1="150" y1="150" x2="186" y2="118" stroke="#0a0c0b" stroke-width="22" stroke-linecap="round"/><line x1="150" y1="150" x2="186" y2="118" stroke="#f3e9d6" stroke-width="12" stroke-linecap="round"/>
+      <circle cx="190" cy="112" r="13" fill="#f3e9d6" stroke="#0a0c0b" stroke-width="5"/>
+      <rect x="184" y="84" width="11" height="24" rx="5" fill="#f3e9d6" stroke="#0a0c0b" stroke-width="5"/>
+      <line x1="60" y1="150" x2="40" y2="190" stroke="#0a0c0b" stroke-width="22" stroke-linecap="round"/><line x1="60" y1="150" x2="40" y2="190" stroke="#f3e9d6" stroke-width="12" stroke-linecap="round"/>
+      <circle cx="105" cy="140" r="72" fill="#f3e9d6" stroke="#0a0c0b" stroke-width="6"/>
+      <path d="M40 112 A65 65 0 0 1 170 112 Z" fill="#4ade80" stroke="#0a0c0b" stroke-width="6" stroke-linejoin="round"/>
+      <path d="M44 112 L178 112 Q188 118 174 126 L46 122 Z" fill="#4ade80" stroke="#0a0c0b" stroke-width="6" stroke-linejoin="round"/>
+      <circle cx="105" cy="70" r="7" fill="#0a0c0b"/>
+      <path d="M68 146 q14 -12 28 0" stroke="#0a0c0b" stroke-width="5" fill="none" stroke-linecap="round"/>
+      <circle cx="128" cy="146" r="14" fill="#fff" stroke="#0a0c0b" stroke-width="5"/><circle cx="131" cy="145" r="6" fill="#0a0c0b"/>
+      <path d="M88 172 q17 16 34 0" stroke="#0a0c0b" stroke-width="5" fill="none" stroke-linecap="round"/>
+    </svg></div></div>
+</section>
+
+<section class="section wrap" id="faq" data-reveal>
+  <p class="kicker">Questions</p>
+  <h2 style="margin:14px 0 26px">The short answers.</h2>
+  
+    <div class="faq">
+      <div class="faq-item">
+        <h3>Is this available yet?</h3>
+        <p>No. The GitHub app is not built and not listed, no audit has ever run, and no credits can be bought. The site and the early-access list are the only things that exist.</p>
+      </div>
+      <div class="faq-item">
+        <h3>Is it a replacement for a security review?</h3>
+        <p>No. It is a second pair of eyes for people who do not have one. A clean report means nothing it looked for turned up, which is not the same as nothing being there.</p>
+      </div>
+      <div class="faq-item">
+        <h3>Does it write code or open pull requests?</h3>
+        <p>No. It reads, it reports, and it suggests. Every change is yours to make, which is also why read-only access is enough.</p>
+      </div>
+      <div class="faq-item">
+        <h3>What does a run cost?</h3>
+        <p>A run is 12 credits, whatever the size of the repository. Credit packs are planned at $15, $60 and $180, which works out between $1.80 and $3.00 a run. Nothing is on sale yet.</p>
+      </div>
+      <div class="faq-item">
+        <h3>Why credits instead of a subscription?</h3>
+        <p>Because a review is a thing you do occasionally, not continuously. A subscription would charge you in the months you shipped nothing.</p>
+      </div>
+      <div class="faq-item">
+        <h3>Which languages does it cover?</h3>
+        <p>The review skills are written against patterns rather than syntax, so the intent is broad coverage. Exactly what is supported at launch will be listed here before launch, not promised now.</p>
+      </div>
+      <div class="faq-item">
+        <h3>Does my code train a model?</h3>
+        <p>No. See the privacy page, which says what is stored, what is not, and what the model provider is allowed to do with it.</p>
+      </div>
+    </div>
+</section>
+
+
+<section class="section wrap" id="early-access" style="text-align:center" data-reveal>
+  <h2>Did you run it through a caddie?</h2>
+  <p class="lede" style="margin:18px auto 0;max-width:560px">The GitHub app is not built yet. Nothing here can be installed or bought. Leave an address and we will write when there is something to try.</p>
+  <div style="display:flex;justify-content:center;margin-top:26px">
+<form class="ea" id="early-access-form" data-early-access data-fallback="contact@vibecaddie.com" method="post" action="/api/early-access">
+  <div class="ea-row">
+    <input type="email" name="email" required autocomplete="email" placeholder="you@example.com" aria-label="Your email address">
+    <input type="text" name="repo" placeholder="github.com/you/project (optional)" aria-label="A repository you would point it at">
+    <button class="btn btn-primary" type="submit">Get early access</button>
+  </div>
+  <label class="hp" aria-hidden="true">Company <input type="text" name="company" tabindex="-1" autocomplete="off"></label>
+  <p class="ea-msg" role="status" aria-live="polite"></p>
+</form></div>
+</section>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <span>&copy; <span data-year>2026</span> VibeCaddie</span>
+    <nav class="foot-nav" aria-label="Footer">
+      <a href="/">Home</a>
+      <a href="/how-it-works/">How it works</a>
+      <a href="/skills/">Skills</a>
+      <a href="/pricing/">Credits</a>
+      <a href="/privacy/">Privacy</a>
+      <a href="https://github.com/VibeCaddie" rel="noopener">GitHub</a>
+      <a href="mailto:contact@vibecaddie.com">Contact</a>
+    </nav>
+    <span class="fz-credit"><a href="https://factory0.ventures" rel="noopener"><svg class="fz-ring" viewBox="0 0 16 16" width="11" height="11" aria-hidden="true" focusable="false"><circle cx="8" cy="8" r="6.1" fill="none" stroke="#FF5A36" stroke-width="1.9" stroke-dasharray="28.7 9.6"/></svg><span>FZ-005 &middot; a Factory Zero venture</span></a></span>
+  </div>
+</footer>
+<script src="/assets/vc-data.js"></script>
+<script src="/assets/vc-common.js"></script>
+</body>
+</html>

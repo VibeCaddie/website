@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120" role="img" aria-label="VibeCaddie">
+  <title>VibeCaddie</title>
+  <rect x="10" y="10" width="100" height="100" rx="28" fill="#4ADE80"/>
+  <rect x="50.9" y="28.2" width="18.2" height="63.6" rx="9.1" fill="#0A0C0B" transform="rotate(20 60 60)"/>
+</svg>

@@ -1,0 +1,42 @@
+<!DOCTYPE html><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  html,body{margin:0;width:1200px;height:630px;background:#0a0c0b;
+    font-family:'Sora',system-ui,sans-serif;color:#e6eae7;overflow:hidden}
+  .grid{position:absolute;inset:0;
+    background-image:linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px),
+                     linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px);
+    background-size:64px 64px;
+    -webkit-mask-image:radial-gradient(ellipse 70% 70% at 30% 40%,#000 20%,transparent 100%)}
+  .pad{position:relative;padding:74px 80px;height:630px;display:flex;flex-direction:column;justify-content:space-between;box-sizing:border-box}
+  .top{display:flex;align-items:center;gap:14px}
+  .mark{width:34px;height:34px;border-radius:10px;background:#4ade80;position:relative}
+  .mark::after{content:'';position:absolute;left:14px;top:6px;width:6px;height:22px;background:#0a0c0b;border-radius:3px;transform:rotate(20deg)}
+  .name{font-size:25px;font-weight:600;letter-spacing:-.01em}
+  .kick{font-family:'IBM Plex Mono',monospace;font-size:17px;color:#4ade80;letter-spacing:.09em;text-transform:uppercase;margin-bottom:22px}
+  h1{margin:0;font-size:66px;line-height:1.04;letter-spacing:-.035em;font-weight:600;max-width:1000px}
+  h1 em{font-style:normal;color:#4ade80}
+  p{margin:26px 0 0;font-size:24px;line-height:1.45;color:#9aa39d;max-width:880px}
+  .foot{display:flex;justify-content:space-between;align-items:center;
+    font-family:'IBM Plex Mono',monospace;font-size:17px;color:#6b746e}
+  .pre{color:#fbbf24;border:1px solid rgba(251,191,36,.35);background:rgba(251,191,36,.08);padding:5px 12px;border-radius:999px;font-size:15px}
+</style>
+<div class="grid"></div>
+<div class="pad">
+  <div class="top"><span class="mark"></span><span class="name">VibeCaddie</span></div>
+  <div>
+    <div class="kick" id="k">Audits AI-assisted code</div>
+    <h1 id="t">You take the shot. <em>We read the green.</em></h1>
+    <p id="s">A code review agent for the code you did not fully write.</p>
+  </div>
+  <div class="foot">
+    <span>vibecaddie.com</span>
+    <span class="pre">Pre-launch</span>
+  </div>
+</div>
+<script>
+  var q = new URLSearchParams(location.search);
+  if (q.get('k')) document.getElementById('k').textContent = q.get('k');
+  if (q.get('t')) document.getElementById('t').innerHTML = q.get('t');
+  if (q.get('s')) document.getElementById('s').textContent = q.get('s');
+</script>

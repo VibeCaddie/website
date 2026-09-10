@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How it works — VibeCaddie</title>
+<meta name="description" content="Point VibeCaddie at a repository with read-only access, the agent works out what the codebase is and loads the review skills that apply, and you get a report ranked by severity.">
+<link rel="canonical" href="https://vibecaddie.com/how-it-works/">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="VibeCaddie">
+<meta property="og:title" content="How it works — VibeCaddie">
+<meta property="og:description" content="Point VibeCaddie at a repository with read-only access, the agent works out what the codebase is and loads the review skills that apply, and you get a report ranked by severity.">
+<meta property="og:url" content="https://vibecaddie.com/how-it-works/">
+<meta property="og:image" content="https://vibecaddie.com/assets/og-how-it-works.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="How it works — VibeCaddie">
+<meta name="twitter:description" content="Point VibeCaddie at a repository with read-only access, the agent works out what the codebase is and loads the review skills that apply, and you get a report ranked by severity.">
+<meta name="twitter:image" content="https://vibecaddie.com/assets/og-how-it-works.png">
+
+<meta name="theme-color" content="#0a0c0b">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+
+<link rel="alternate" type="text/plain" href="/llms.txt" title="Plain-text brief for language models">
+<link rel="alternate" type="application/json" href="/vibecaddie.json" title="VibeCaddie as JSON">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/vc.css">
+
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://vibecaddie.com/#org","name":"VibeCaddie","url":"https://vibecaddie.com","email":"contact@vibecaddie.com","sameAs":["https://github.com/VibeCaddie","https://factory0.ventures"],"parentOrganization":{"@type":"Organization","name":"Factory Zero","url":"https://factory0.ventures"}},{"@type":"WebSite","@id":"https://vibecaddie.com/#site","url":"https://vibecaddie.com","name":"VibeCaddie","description":"VibeCaddie audits the code you did not fully write. Point it at a repository, run it, and get a ranked list of what to fix before it bites you.","publisher":{"@id":"https://vibecaddie.com/#org"}},{"@type":"SoftwareApplication","@id":"https://vibecaddie.com/#app","name":"VibeCaddie","applicationCategory":"DeveloperApplication","operatingSystem":"Web","description":"VibeCaddie audits the code you did not fully write. Point it at a repository, run it, and get a ranked list of what to fix before it bites you.","offers":[{"@type":"Offer","name":"Starter — 60 credits","price":"15","priceCurrency":"USD","availability":"https://schema.org/PreOrder","description":"Enough to audit one project, fix it, and run it again a few times."},{"@type":"Offer","name":"Regular — 300 credits","price":"60","priceCurrency":"USD","availability":"https://schema.org/PreOrder","description":"A run before every release for the better part of a year."},{"@type":"Offer","name":"Heavy — 1200 credits","price":"180","priceCurrency":"USD","availability":"https://schema.org/PreOrder","description":"Several repositories, or a small team running it on every branch."}]},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://vibecaddie.com/"},{"@type":"ListItem","position":2,"name":"How it works","item":"https://vibecaddie.com/how-it-works/"}]}]}</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<div class="status-bar">
+  <div class="wrap"><b>Pre-launch.</b> <span>The GitHub app is not built yet. Nothing here can be installed or bought.</span></div>
+</div>
+
+<nav class="nav" data-open="false">
+  <div class="wrap">
+    <a class="wordmark" href="/"><span class="mark" aria-hidden="true"></span>VibeCaddie</a>
+    <button class="nav-toggle" type="button" aria-controls="nav-links">Menu</button>
+    <div class="nav-links" id="nav-links">
+      <a href="/how-it-works/" aria-current="page">How it works</a>
+      <a href="/skills/">Skills</a>
+      <a href="/pricing/">Credits</a>
+      <a href="/privacy/">Privacy</a>
+      <a class="btn btn-primary btn-sm" href="/#early-access">Get early access</a>
+    </div>
+  </div>
+</nav>
+<main id="main">
+
+<section class="section wrap" data-reveal>
+  <p class="kicker">How it works</p>
+  <h1 style="margin:16px 0 0;font-size:clamp(34px,5vw,60px)">Three steps, and none of them is configuration.</h1>
+  <p class="lede" style="margin:22px 0 0;max-width:640px">VibeCaddie audits the code you did not fully write. Point it at a repository, run it, and get a ranked list of what to fix before it bites you.</p>
+</section>
+
+<section class="section-tight wrap" data-reveal>
+  <div class="two-col" style="padding-block:28px;border-top:1px solid var(--line-2)">
+    <div>
+      <div class="mono" style="color:var(--green);font-size:13px">01</div>
+      <h2 style="margin-top:10px;font-size:clamp(24px,3vw,34px)">Point it at a repo</h2>
+    </div>
+    <div class="stack">
+      <p class="body strong-line">Read-only access to the repositories you want watched. Nothing to configure.</p>
+      <p class="body">VibeCaddie reads your code and nothing else. It needs no write access, opens no pull requests, and changes nothing in your repository. There are no rules to write and no configuration file to maintain, because the thing that decides what to check is the agent, not a config.</p>
+    </div>
+  </div>
+  <div class="two-col" style="padding-block:28px;border-top:1px solid var(--line-2)">
+    <div>
+      <div class="mono" style="color:var(--green);font-size:13px">02</div>
+      <h2 style="margin-top:10px;font-size:clamp(24px,3vw,34px)">The agent picks its skills</h2>
+    </div>
+    <div class="stack">
+      <p class="body strong-line">It reads the repo, works out what kind of codebase it is, and loads the review skills that matter for it.</p>
+      <p class="body">A review skill is a narrow specialist: one that knows how session handling goes wrong, one that knows what an unverified webhook looks like. The agent reads the dependency manifest, the directory shape and the code itself, decides which specialists are relevant, and runs only those. A Stripe integration gets the webhook skill. A CLI with no network surface does not.</p>
+    </div>
+  </div>
+  <div class="two-col" style="padding-block:28px;border-top:1px solid var(--line-2)">
+    <div>
+      <div class="mono" style="color:var(--green);font-size:13px">03</div>
+      <h2 style="margin-top:10px;font-size:clamp(24px,3vw,34px)">You get a report</h2>
+    </div>
+    <div class="stack">
+      <p class="body strong-line">Findings ranked by severity, with exact files and lines, a plain explanation, and a suggested fix.</p>
+      <p class="body">Every finding names the file and the line, says what is wrong in a sentence, says why it matters in terms of what an attacker or an outage would actually do, and shows the change that would fix it. No severity scores without explanation, and no findings you have to research before you can act on them.</p>
+    </div>
+  </div>
+</section>
+
+<section class="band">
+  <div class="section wrap" data-reveal>
+    <div class="two-col center" style="margin-bottom:30px">
+      <div>
+        <p class="kicker">A run, in order</p>
+        <h2 style="margin-top:14px">What the agent does between install and report.</h2>
+      </div>
+      <p class="body">Clean means nothing we looked for turned up. It does not mean nothing is there. The run below is the sample from the home page, shown as the sequence it actually follows.</p>
+    </div>
+    <div class="two-col" data-reveal>
+      
+  <div class="term" data-term>
+    <div class="term-bar">
+      <i></i><i></i><i></i><span>vibecaddie &middot; acme/checkout</span>
+    </div>
+    <div class="term-body">
+      <div class="term-line is-cmd"><span class="pre">$</span><span class="txt">vibecaddie audit acme/checkout</span></div>
+      <div class="term-line"><span class="pre">→</span><span class="txt">reading repo … 42 files</span></div>
+      <div class="term-line"><span class="pre">→</span><span class="txt">detected: Next.js 15 · Prisma · Stripe webhooks</span></div>
+      <div class="term-line"><span class="pre">→</span><span class="txt">loading skills: auth, secrets, input-validation,</span></div>
+      <div class="term-line"><span class="pre"> </span><span class="txt">data-exposure, dependencies, error-handling</span></div>
+      <div class="term-line"><span class="pre">→</span><span class="txt">auditing …</span></div>
+      <div class="term-line is-ok"><span class="pre">✓</span><span class="txt">2 critical · 3 warnings · 4 notes</span></div>
+      <div class="term-line"><span class="pre">·</span><span class="txt">done in 1m 48s · 12 credits</span></div>
+      <span class="caret" hidden></span>
+    </div>
+  </div>
+      <div class="stack">
+        <p class="body"><b class="strong-line">Read.</b> The agent walks the repository at the commit you ran against, reading source, the dependency manifest and configuration. It does not clone a permanent copy.</p>
+        <p class="body"><b class="strong-line">Detect.</b> From what it read it works out the shape of the codebase: framework, data layer, whether money moves through it, whether it takes uploads.</p>
+        <p class="body"><b class="strong-line">Select.</b> It loads the review skills that match. This is the step you would otherwise be doing by hand, badly, in a config file.</p>
+        <p class="body"><b class="strong-line">Audit.</b> Each skill reviews the code it is responsible for, and findings that survive review are ranked by severity.</p>
+        <p class="body"><b class="strong-line">Report.</b> You get the file, the line, the reason and the fix. Then you decide what is worth doing.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section wrap two-col center" data-reveal>
+  
+    <div class="loop-fig" data-loop>
+      <svg viewBox="0 0 420 420" width="380" height="380" role="img" aria-label="The audit loop: Audit, then Fix, then Re-run, then Repeat, repeating">
+        <circle cx="210" cy="210" r="150" fill="none" stroke="rgba(255,255,255,.08)" stroke-width="2"/>
+        <circle class="loop-ring" cx="210" cy="210" r="150" fill="none" stroke="#4ade80" stroke-width="2"/>
+        <g class="loop-orbit"><circle cx="210" cy="60" r="7" fill="#4ade80"/></g>
+        <g class="loop-node on">
+          <circle cx="210" cy="60" r="34"/>
+          <text x="210" y="60" text-anchor="middle" dominant-baseline="central">Audit</text>
+        </g>
+        <g class="loop-node">
+          <circle cx="360" cy="210" r="34"/>
+          <text x="360" y="210" text-anchor="middle" dominant-baseline="central">Fix</text>
+        </g>
+        <g class="loop-node">
+          <circle cx="210" cy="360" r="34"/>
+          <text x="210" y="360" text-anchor="middle" dominant-baseline="central">Re-run</text>
+        </g>
+        <g class="loop-node">
+          <circle cx="60" cy="210" r="34"/>
+          <text x="60" y="210" text-anchor="middle" dominant-baseline="central">Repeat</text>
+        </g>
+        <text x="210" y="200" text-anchor="middle" fill="#6b746e" font-family="IBM Plex Mono,monospace" font-size="12">run</text>
+        <text x="210" y="228" text-anchor="middle" fill="#e6eae7" font-family="IBM Plex Mono,monospace" font-size="26" font-weight="500" data-run-no>#1</text>
+      </svg>
+    </div>
+  <div>
+    <p class="kicker">The loop</p>
+    <h2 style="margin-top:14px">A loop, not a gate.</h2>
+    <p class="body" style="margin-top:16px">Run the audit. Fix what it found. Run it again. Each run costs the same 12 credits, so you always know what the next pass will cost before you start it.</p>
+    <p class="body" style="margin-top:16px">Repeat until the report comes back clean, or until you decide the rest can wait. That call is yours.</p>
+  </div>
+</section>
+
+
+<section class="section wrap" id="early-access" style="text-align:center" data-reveal>
+  <h2>Did you run it through a caddie?</h2>
+  <p class="lede" style="margin:18px auto 0;max-width:560px">The GitHub app is not built yet. Nothing here can be installed or bought. Leave an address and we will write when there is something to try.</p>
+  <div style="display:flex;justify-content:center;margin-top:26px">
+<form class="ea" id="early-access-form" data-early-access data-fallback="contact@vibecaddie.com" method="post" action="/api/early-access">
+  <div class="ea-row">
+    <input type="email" name="email" required autocomplete="email" placeholder="you@example.com" aria-label="Your email address">
+    <input type="text" name="repo" placeholder="github.com/you/project (optional)" aria-label="A repository you would point it at">
+    <button class="btn btn-primary" type="submit">Get early access</button>
+  </div>
+  <label class="hp" aria-hidden="true">Company <input type="text" name="company" tabindex="-1" autocomplete="off"></label>
+  <p class="ea-msg" role="status" aria-live="polite"></p>
+</form></div>
+</section>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <span>&copy; <span data-year>2026</span> VibeCaddie</span>
+    <nav class="foot-nav" aria-label="Footer">
+      <a href="/">Home</a>
+      <a href="/how-it-works/">How it works</a>
+      <a href="/skills/">Skills</a>
+      <a href="/pricing/">Credits</a>
+      <a href="/privacy/">Privacy</a>
+      <a href="https://github.com/VibeCaddie" rel="noopener">GitHub</a>
+      <a href="mailto:contact@vibecaddie.com">Contact</a>
+    </nav>
+    <span class="fz-credit"><a href="https://factory0.ventures" rel="noopener"><svg class="fz-ring" viewBox="0 0 16 16" width="11" height="11" aria-hidden="true" focusable="false"><circle cx="8" cy="8" r="6.1" fill="none" stroke="#FF5A36" stroke-width="1.9" stroke-dasharray="28.7 9.6"/></svg><span>FZ-005 &middot; a Factory Zero venture</span></a></span>
+  </div>
+</footer>
+<script src="/assets/vc-data.js"></script>
+<script src="/assets/vc-common.js"></script>
+</body>
+</html>

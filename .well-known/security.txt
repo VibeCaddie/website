@@ -1,0 +1,6 @@
+# VibeCaddie security contact
+Contact: mailto:contact@vibecaddie.com
+Contact: https://github.com/VibeCaddie
+Expires: 2027-09-10T00:00:00.000Z
+Preferred-Languages: en
+Canonical: https://vibecaddie.com/.well-known/security.txt
