@@ -367,10 +367,35 @@ h1 .accent { color: var(--green); }
 .foot-nav { display: flex; gap: 22px; flex-wrap: wrap; }
 /* "Built with": generated from tools/built-with.json; planned ones say so. */
 .foot-built { padding-block: 0 26px; }
-.built-with { margin: 0; font-family: var(--mono); font-size: 11.5px; line-height: 1.8; color: var(--dim); overflow-wrap: anywhere; }
-.built-with a { color: var(--muted); text-decoration: underline; text-underline-offset: 3px; }
-.built-with a:hover { color: var(--green); }
-.built-with__planned { color: var(--dim); }
+/* Tags in the skill-tag style: panel tile, mono role, a lit green dot when live.
+   Planned ones are dashed and unlit with a `planned` note chip. Roles use
+   --muted, not --dim: --dim is under 4.5:1 at this size. The whole tag is the
+   link's hit area. */
+.built-with { display: flex; flex-wrap: wrap; gap: 8px; margin: 0; padding: 0; list-style: none; }
+.bw {
+  position: relative; display: inline-flex; align-items: center; flex-wrap: wrap; gap: 2px 9px;
+  min-height: 36px; max-width: 100%; padding: 6px 13px; border-radius: 10px;
+  border: 1px solid rgba(74,222,128,.28); background: var(--panel);
+  font-size: 13px; line-height: 1.35; transition: border-color .3s, background .3s;
+}
+.bw::before { content: ""; flex: none; width: 7px; height: 7px; border-radius: 50%; background: var(--green); box-shadow: 0 0 8px rgba(74,222,128,.6); }
+.bw__role { font-family: var(--mono); font-size: 11.5px; color: var(--muted); }
+.built-with .bw__name { color: var(--ink); font-weight: 500; overflow-wrap: anywhere; }
+.built-with .bw__name::after { content: ""; position: absolute; inset: -1px; border-radius: 10px; }
+.built-with .bw__name:focus-visible { outline: none; }
+.built-with .bw__name:focus-visible::after { outline: 2px solid var(--green); outline-offset: 3px; }
+.bw:hover { border-color: rgba(74,222,128,.55); background: var(--green-bg); }
+.built-with .bw:hover .bw__name { color: var(--green-lt); }
+.bw--planned { border: 1px dashed var(--line-3); background: transparent; }
+.bw--planned::before { background: #2a2f2c; box-shadow: inset 0 0 0 1px var(--dim); }
+.built-with .bw--planned .bw__name { color: var(--silver); font-weight: 400; }
+.bw--planned:hover { border-color: var(--muted); background: var(--panel); }
+.bw__tag { font-family: var(--mono); font-size: 11px; color: var(--muted); background: rgba(255,255,255,.06); border-radius: 6px; padding: 1px 7px; }
+.bw__paren { display: none; }
+.bw--source { border-color: transparent; background: transparent; }
+.bw--source::before { display: none; }
+.bw--source:hover { border-color: var(--line-3); background: transparent; }
+@media (prefers-reduced-motion: reduce) { .bw { transition: none; } }
 .subprocessors { margin: 18px 0 0; padding-left: 20px; display: grid; gap: 10px; color: var(--muted); line-height: 1.6; max-width: 760px; }
 .subprocessors a, .subprocessors__sister a { color: var(--green); }
 .subprocessors__sister { margin: 18px 0 0; color: var(--muted); line-height: 1.6; max-width: 760px; }
