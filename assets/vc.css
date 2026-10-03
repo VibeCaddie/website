@@ -365,6 +365,15 @@ h1 .accent { color: var(--green); }
 .foot { border-top: 1px solid var(--line-2); margin-top: clamp(48px, 7vw, 90px); }
 .foot .wrap { padding-block: 26px; display: flex; justify-content: space-between; align-items: center; gap: 18px; flex-wrap: wrap; font-size: 13px; color: var(--dim); }
 .foot-nav { display: flex; gap: 22px; flex-wrap: wrap; }
+/* "Built with": generated from tools/built-with.json; planned ones say so. */
+.foot-built { padding-block: 0 26px; }
+.built-with { margin: 0; font-family: var(--mono); font-size: 11.5px; line-height: 1.8; color: var(--dim); overflow-wrap: anywhere; }
+.built-with a { color: var(--muted); text-decoration: underline; text-underline-offset: 3px; }
+.built-with a:hover { color: var(--green); }
+.built-with__planned { color: var(--dim); }
+.subprocessors { margin: 18px 0 0; padding-left: 20px; display: grid; gap: 10px; color: var(--muted); line-height: 1.6; max-width: 760px; }
+.subprocessors a, .subprocessors__sister a { color: var(--green); }
+.subprocessors__sister { margin: 18px 0 0; color: var(--muted); line-height: 1.6; max-width: 760px; }
 .fz-credit { display: inline-flex; align-items: center; gap: 7px; }
 .fz-ring { flex: none; }
 

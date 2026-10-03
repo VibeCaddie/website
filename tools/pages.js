@@ -88,6 +88,9 @@ const footer = () => `
     </nav>
     ${fzCredit()}
   </div>
+  <div class="wrap foot-built">
+    <!-- built-with:start --><!-- built-with:end -->
+  </div>
 </footer>`;
 
 /* The early-access form. The design mocked an "Install on GitHub" button that
@@ -617,6 +620,12 @@ function privacyPage() {
   <p class="body" style="margin-top:26px">${tx(p.note)}</p>
 </section>
 
+<section class="section-tight wrap" data-reveal>
+  <h2 style="margin:0;font-size:clamp(22px,2.6vw,30px)">Who processes data for this site</h2>
+  <p class="body" style="margin-top:14px;max-width:660px">The services this site runs on today, and the ones planned, from the <a href="https://factory0.ventures/stack.json" style="color:var(--green)">Factory Zero registry</a>. Planned ones are not in use yet. The early-access form delivers through Resend once it is connected; it is not connected yet, so it sends nothing and says so.</p>
+  <!-- subprocessors:start --><!-- subprocessors:end -->
+</section>
+
 <section class="band">
   <div class="section wrap two-col" data-reveal>
     <h2>Read-only is not a setting. It is the design.</h2>
@@ -744,6 +753,14 @@ function llms() {
   L.push('');
   L.push(D.privacy.note);
   L.push('');
+  L.push('## Built with');
+  L.push('');
+  // from tools/built-with.json, the vendored registry entry; planned is not in use
+  const BW = JSON.parse(fs.readFileSync(path.join(__dirname, 'built-with.json'), 'utf8'));
+  BW.uses.forEach(u => { L.push(`- ${u.phrase} ${u.name} (${u.status === 'live' ? 'in use today' : 'planned, not in use yet'}): ${u.url}`); });
+  L.push('');
+  L.push(`Source: the Factory Zero registry, ${BW.source}`);
+  L.push('');
   L.push('## FAQ');
   L.push('');
   D.faq.forEach(f => { L.push(`**${f.q}**`); L.push(f.a); L.push(''); });
@@ -798,4 +815,10 @@ out('404.html', doc({ slug: '404', file: '404.html', nav: null,
 out('sitemap.xml', sitemap());
 out('llms.txt', llms());
 out('vibecaddie.json', machineJson());
+
+// The footer's "Built with" line and the privacy page's processor list, from
+// tools/built-with.json (a vendored copy of this venture's entry in the Factory
+// Zero registry's stack.json). The pages above carry empty markers; this fills them.
+const bw = require('child_process').spawnSync('python3', [path.join(__dirname, 'built-with.py')], { stdio: 'inherit' });
+if (bw.status !== 0) throw new Error('tools/built-with.py failed');
 console.log('done.');
