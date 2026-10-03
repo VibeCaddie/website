@@ -66,6 +66,13 @@ Credits do not expire. **Nothing is on sale yet.**
 
 None of the above is live yet, because nothing has shipped. It is a commitment about how the product will behave, published now so it can be held against what launches.
 
+## Built with
+
+- Deploys by Keep Shipping (planned, not in use yet): https://keepshipping.run/
+- Hosted on Cloudflare (in use today): https://www.cloudflare.com
+
+Source: the Factory Zero registry, https://factory0.ventures/stack.json
+
 ## FAQ
 
 **Is this available yet?**
