@@ -159,7 +159,7 @@ python3 tools/built-with.py --pull    # refresh built-with.json, rewrite the pag
 python3 tools/built-with.py --check   # fails if a page is stale
 ```
 
-The registry does not list Resend: the early-access form's secrets are not set
+The registry does not list Owlpost: the early-access form's secrets are not set
 (below), so nothing is sent through it yet. Add it to the registry when they are.
 
 ---
@@ -269,10 +269,14 @@ pretending to have sent:
 
 | Secret | For |
 | :--- | :--- |
-| `RESEND_API_KEY` | Sending at all |
+| `OWLPOST_API_KEY` | Sending at all, through Owlpost (`POST https://api.owlpost.to/v1/emails`) |
 | `EARLY_ACCESS_TO` | Inbox that receives signups |
-| `EARLY_ACCESS_FROM` | Optional. Defaults to `onboarding@resend.dev` |
+| `EARLY_ACCESS_FROM` | Optional. Defaults to `VibeCaddie <no-reply@send.vibecaddie.com>` |
+| `OWLPOST_BASE_URL` | Optional. Defaults to `https://api.owlpost.to` |
 | `TURNSTILE_SECRET` | Optional. Verifies a Turnstile token if present |
+
+The sender's domain, `send.vibecaddie.com`, has to be a verified sending domain
+on the Owlpost account first, or Owlpost refuses the message.
 
 Secrets bind at deploy time, so redeploy after setting them or the function
 keeps returning its not-configured branch.
