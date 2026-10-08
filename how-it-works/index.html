@@ -172,15 +172,20 @@
   <h2>Did you run it through a caddie?</h2>
   <p class="lede" style="margin:18px auto 0;max-width:560px">The GitHub app is not built yet. Nothing here can be installed or bought. Leave an address and we will write when there is something to try.</p>
   <div style="display:flex;justify-content:center;margin-top:26px">
-<form class="ea" id="early-access-form" data-early-access data-fallback="contact@vibecaddie.com" method="post" action="/api/early-access">
+<form class="ea" id="early-access-form" data-early-access data-fallback="contact@vibecaddie.com" method="post" action="/api/early-access" novalidate>
   <div class="ea-row">
-    <input type="email" name="email" required autocomplete="email" placeholder="you@example.com" aria-label="Your email address">
+    <input type="email" name="email" required autocomplete="email" placeholder="you@example.com" aria-label="Your email address" aria-describedby="early-access-form-msg">
     <input type="text" name="repo" placeholder="github.com/you/project (optional)" aria-label="A repository you would point it at">
-    <button class="btn btn-primary" type="submit">Get early access</button>
+    <button class="btn btn-primary" type="submit"><span class="ea-spin" aria-hidden="true"></span><span data-label>Get early access</span></button>
   </div>
   <label class="hp" aria-hidden="true">Company <input type="text" name="company" tabindex="-1" autocomplete="off"></label>
-  <p class="ea-msg" role="status" aria-live="polite"></p>
-</form></div>
+  <p class="ea-msg err" id="early-access-form-msg" role="alert" hidden></p>
+</form>
+<div class="ea-done" data-ea-done role="status" aria-live="polite" tabindex="-1" hidden>
+  <p class="ea-done-h">You&rsquo;re on the list</p>
+  <p>We&rsquo;ll write to <strong data-done-email></strong> when there is something to try.</p>
+  <p class="ea-done-s">Signed up before? You&rsquo;re still on it &mdash; nothing more to do. <button type="button" class="ea-again" data-again>Use a different email</button></p>
+</div></div>
 </section>
 </main>
 
