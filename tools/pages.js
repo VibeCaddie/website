@@ -96,15 +96,20 @@ const footer = () => `
 /* The early-access form. The design mocked an "Install on GitHub" button that
  * linked to a listing which does not exist; this is the honest replacement. */
 const earlyAccess = (id = 'early-access') => `
-<form class="ea" id="${id}" data-early-access data-fallback="${esc(B.email)}" method="post" action="/api/early-access">
+<form class="ea" id="${id}" data-early-access data-fallback="${esc(B.email)}" method="post" action="/api/early-access" novalidate>
   <div class="ea-row">
-    <input type="email" name="email" required autocomplete="email" placeholder="you@example.com" aria-label="Your email address">
+    <input type="email" name="email" required autocomplete="email" placeholder="you@example.com" aria-label="Your email address" aria-describedby="${id}-msg">
     <input type="text" name="repo" placeholder="github.com/you/project (optional)" aria-label="A repository you would point it at">
-    <button class="btn btn-primary" type="submit">Get early access</button>
+    <button class="btn btn-primary" type="submit"><span class="ea-spin" aria-hidden="true"></span><span data-label>Get early access</span></button>
   </div>
   <label class="hp" aria-hidden="true">Company <input type="text" name="company" tabindex="-1" autocomplete="off"></label>
-  <p class="ea-msg" role="status" aria-live="polite"></p>
-</form>`;
+  <p class="ea-msg err" id="${id}-msg" role="alert" hidden></p>
+</form>
+<div class="ea-done" data-ea-done role="status" aria-live="polite" tabindex="-1" hidden>
+  <p class="ea-done-h">You&rsquo;re on the list</p>
+  <p>We&rsquo;ll write to <strong data-done-email></strong> when there is something to try.</p>
+  <p class="ea-done-s">Signed up before? You&rsquo;re still on it &mdash; nothing more to do. <button type="button" class="ea-again" data-again>Use a different email</button></p>
+</div>`;
 
 /* ── structured data ─────────────────────────────────────────── */
 function jsonLd(page) {

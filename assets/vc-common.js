@@ -131,25 +131,53 @@
   if (form) {
     var msg = form.querySelector('.ea-msg');
     var submit = form.querySelector('button[type="submit"]');
+    var label = submit && submit.querySelector('[data-label]');
+    var input = form.elements.email;
+    var done = form.parentNode.querySelector('[data-ea-done]');
     var fallback = form.getAttribute('data-fallback') || 'contact@vibecaddie.com';
+    var EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;   /* the same test the function applies */
+    var BAD = 'That email address does not look right. Check it and try again.';
+    var DOWN = 'We could not reach the list just now. Try again in a moment, or write to ' + fallback + ' and we will add you by hand.';
 
-    function say(text, kind) {
-      if (!msg) return;
-      msg.textContent = text;
-      msg.className = 'ea-msg' + (kind ? ' ' + kind : '');
+    function busy(on) {
+      if (!submit) return;
+      submit.disabled = on;
+      if (on) submit.setAttribute('aria-busy', 'true'); else submit.removeAttribute('aria-busy');
+      if (label) label.textContent = on ? 'Sending…' : 'Get early access';
     }
+    /* An inline error; the form stays as typed. onEmail marks and focuses the field. */
+    function fail(text, onEmail) {
+      if (msg) { msg.textContent = text; msg.hidden = false; }
+      if (input) {
+        input.setAttribute('aria-invalid', onEmail ? 'true' : 'false');
+        if (onEmail) input.focus();
+      }
+    }
+    if (input) input.addEventListener('input', function () {
+      if (input.getAttribute('aria-invalid') === 'true' && EMAIL.test(input.value.trim())) {
+        input.setAttribute('aria-invalid', 'false');
+        if (msg) msg.hidden = true;
+      }
+    });
+    var again = done && done.querySelector('[data-again]');
+    if (again) again.addEventListener('click', function () {
+      done.hidden = true; form.hidden = false;
+      if (msg) msg.hidden = true;
+      input.focus(); input.select();
+    });
 
     form.addEventListener('submit', function (e) {
       e.preventDefault();
+      if (submit && submit.disabled) return;
+      if (msg) msg.hidden = true;
       var data = {
-        email:   (form.elements.email && form.elements.email.value || '').trim(),
+        email:   (input && input.value || '').trim(),
         repo:    (form.elements.repo && form.elements.repo.value || '').trim(),
         company: (form.elements.company && form.elements.company.value || '')
       };
-      if (!data.email) { say('An email address, please.', 'err'); return; }
-
-      if (submit) { submit.disabled = true; }
-      say('Sending …');
+      if (!EMAIL.test(data.email)) { fail(BAD, true); return; }
+      input.setAttribute('aria-invalid', 'false');
+      busy(true);
 
       fetch('/api/early-access', {
         method: 'POST',
@@ -160,23 +188,23 @@
           return { ok: res.ok, status: res.status, body: body };
         });
       }).then(function (r) {
+        busy(false);
         if (r.ok && r.body.ok) {
-          form.reset();
-          say('On the list. We will write when there is something to try.', 'ok');
+          if (done) {
+            done.querySelector('[data-done-email]').textContent = data.email;
+            form.hidden = true; done.hidden = false; done.focus();
+          }
           return;
         }
         /* Never claim a message was delivered that was not. */
-        if (r.body.error === 'not_configured') {
-          say('Not wired up yet. Write to ' + fallback + ' and we will add you by hand.', 'err');
-        } else if (r.body.error === 'email_invalid') {
-          say('That address does not look right.', 'err');
-        } else {
-          say('That did not send. Write to ' + fallback + ' instead.', 'err');
-        }
+        if (r.body.error === 'email_invalid') fail(BAD, true);
+        else if (r.body.error === 'challenge_failed') fail('The human check did not go through. Reload the page and try again.', false);
+        else if (r.status === 429) fail('Too many tries. Wait a minute, then try again.', false);
+        else if (r.body.error === 'not_configured') fail('Not wired up yet. Write to ' + fallback + ' and we will add you by hand.', false);
+        else fail(DOWN, false);
       }).catch(function () {
-        say('That did not send. Write to ' + fallback + ' instead.', 'err');
-      }).then(function () {
-        if (submit) { submit.disabled = false; }
+        busy(false);
+        fail(DOWN, false);
       });
     });
   }
