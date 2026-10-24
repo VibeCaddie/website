@@ -249,7 +249,7 @@ Cloudflare Pages, project `vibecaddie`, on the Kontinuum account.
 
 ```bash
 ./tools/build-dist.sh
-npx wrangler pages deploy dist --project-name=vibecaddie --branch main
+bunx wrangler pages deploy dist --project-name=vibecaddie --branch main
 ```
 
 Run it from the repo root: `functions/` is discovered next to the working
