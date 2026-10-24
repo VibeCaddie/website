@@ -89,6 +89,7 @@ const footer = () => `
     ${fzCredit()}
   </div>
   <div class="wrap foot-built">
+    <a href="https://factory0.ventures/ventures/vibecaddie/"><img src="https://factory0.ventures/badge/vibecaddie.svg" alt="In development · a Factory Zero venture" height="22"></a>
     <!-- built-with:start --><!-- built-with:end -->
   </div>
 </footer>`;
@@ -442,6 +443,7 @@ function home() {
         <span class="detect-name" data-detect-name>${esc(D.detected[0].name)}</span>
       </div>
       <div class="mono dim" style="margin-top:10px;font-size:12px" data-detect-stack>${esc(D.detected[0].stack)}</div>
+      <p style="margin-top:14px"><span class="sample-note">Sample &middot; illustrative repo, not a real scan</span></p>
       <p class="body" style="margin-top:20px"><a href="/skills/" style="color:var(--green)">All twelve skills &rarr;</a></p>
     </div>
     <div style="position:relative">${skillCloud()}</div>
